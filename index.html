@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Noras Kokkeskole 🍕</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+
+    <!-- HEADER / TOPBAR -->
+    <header class="top-bar">
+      <div class="logo-area" onclick="goHome()">
+        <span class="logo-icon">👩‍🍳</span>
+        <div class="logo-text">
+          <h1>Noras Kokkeskole</h1>
+          <span class="sub-logo">Lær at lave lækker mad!</span>
+        </div>
+      </div>
+      
+      <div class="user-badge">
+        <span class="star-icon">⭐</span>
+        <span id="starCount">0</span> Stjerner
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT VIEW AREA -->
+    <main id="mainView" class="main-content">
+      <!-- Views will be dynamically swapped or rendered -->
+    </main>
+
+    <!-- BOTTOM NAVIGATION / FOOTER -->
+    <footer class="bottom-bar">
+      <button class="nav-btn" onclick="goHome()">
+        <span class="btn-icon">🏠</span>
+        <span class="btn-label">Hjem</span>
+      </button>
+      <button class="nav-btn primary-nav" onclick="openPizzaRecipe()">
+        <span class="btn-icon">🍕</span>
+        <span class="btn-label">Lav Pizza</span>
+      </button>
+      <button class="nav-btn" onclick="openBadges()">
+        <span class="btn-icon">🏆</span>
+        <span class="btn-label">Mine Trofæer</span>
+      </button>
+    </footer>
+
+  </div>
+
+  <!-- Audio Context Helper Scripts & Confetti JS -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
