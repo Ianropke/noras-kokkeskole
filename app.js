@@ -9,7 +9,7 @@ const state = {
   currentRecipe: 'pizza',
   currentStepIndex: 0,
   timerInterval: null,
-  timerSeconds: 600, // 10 min default
+  timerSeconds: 1800, // 30 min default til hævning
   timerRunning: false,
   checklist: {}
 };
@@ -18,10 +18,13 @@ const state = {
 const recipeData = {
   pizza: {
     id: 'pizza',
-    title: 'Noras Lækre Pizza 🍕',
-    subtitle: 'Nemt, sjovt og sprødt!',
+    title: 'Noras Hjemmelavede Pizza 🍕',
+    subtitle: 'Lær at lave dej fra bunden, hæve den og bage den sprød!',
     ingredients: [
-      { id: 'dough', name: '1 stk. Pizzadej', icon: '🫓' },
+      { id: 'yeast', name: '25g Frisk Gær (eller 1 tsk tørgær)', icon: '🧊' },
+      { id: 'water', name: '2 dl Lunkent Vand', icon: '💧' },
+      { id: 'flour', name: '3 kopper Hvedemel', icon: '🌾' },
+      { id: 'salt_oil', name: '1 tsk Salt & 1 spsk Olie', icon: '🧂' },
       { id: 'sauce', name: '3 spiseskefulde Tomatsauce', icon: '🍅' },
       { id: 'cheese', name: '2 kopper Revet Ost', icon: '🧀' },
       { id: 'topping', name: 'Favorit-fyld (Skinke/Pepperoni)', icon: '🥓' }
@@ -30,19 +33,65 @@ const recipeData = {
       {
         num: 1,
         title: 'Vask hænderne godt! 🧼',
-        text: 'Før vi starter i køkkenet, skal vi vaske hænder med vand og sæbe. Tæl langsomt til 20 mens du vasker!',
-        mathHint: '💡 Kan du tælle til 20? 1, 2, 3... 20!',
-        mediaType: 'image',
-        mediaSrc: 'hand_wash.png',
+        text: 'Før vi rører ved dejen, skal vi vaske hænder med vand og sæbe. Tæl langsomt til 20 mens du vasker!',
+        mathHint: '💡 Tæl: 1, 2, 3... helt til 20!',
+        mediaType: 'video',
+        mediaSrc: 'hand_wash.mp4',
         assetId: 'hand_wash',
         icon: '🧼',
-        flowPrompt: '3D claymation hands washing with bubbly soap under a tap'
+        flowPrompt: '3D claymation hands washing under running tap with soapy bubbles'
       },
       {
         num: 2,
-        title: 'Rul dejen ud 🫓',
-        text: 'Læg pizzadejen på bagepapir. Tryk dejen flad med dine hænder eller rul med kagerullen, til den er rund som en sol!',
-        mathHint: '💡 Gør dejen lige så stor som en stor tallerken.',
+        title: 'Opløs gæren i vand 🥣',
+        text: 'Hæld 2 dl lunkent vand i en stor skål. Smuldr gæren i vandet og rør med en ske, indtil gæren er helt smeltet og væk!',
+        mathHint: '💡 Tæl: 2 deciliter vand i målebægeret.',
+        mediaType: 'video',
+        mediaSrc: 'video_yeast.mp4',
+        assetId: 'video_yeast',
+        icon: '🥣',
+        flowPrompt: '3D claymation hands crumbling fresh yeast into a bowl of warm water and stirring with a spoon'
+      },
+      {
+        num: 3,
+        title: 'Tilsæt olie, salt og mel 🌾',
+        text: 'Hæld 1 spiseskefuld olie og 1 teskefuld salt i skålen. Tilsæt derefter 3 kopper mel én ad gangen.',
+        mathHint: '💡 Tæl kopperne mel: 1... 2... 3 kopper!',
+        mediaType: 'video',
+        mediaSrc: 'video_add_flour.mp4',
+        assetId: 'video_add_flour',
+        icon: '🌾',
+        flowPrompt: '3D claymation hands pouring flour cups, salt and oil into a bowl with yeast water'
+      },
+      {
+        num: 4,
+        title: 'Ælt dejen flittigt! 👐',
+        text: 'Brug dine hænder! Tryk, fold og ælt dejen i skålen eller på bordet, til den bliver en glat, blød og dejlig bold.',
+        mathHint: '💡 Ælt dejen i ca. 3 minutter til den ikke klistrer mere!',
+        mediaType: 'video',
+        mediaSrc: 'video_knead.mp4',
+        assetId: 'video_knead',
+        icon: '👐',
+        flowPrompt: '3D claymation child hands actively kneading a smooth pizza dough ball on a floured wooden table'
+      },
+      {
+        num: 5,
+        title: 'Hævetid! (Dejen skal vokse) ⏳',
+        text: 'Læg dejen tilbage i skålen og læg et rent viskestykke over. Sæt timeren på 30 minutter og se dejen vokse sig dobbelt så stor!',
+        hasTimer: true,
+        timerMinutes: 30,
+        mathHint: '💡 30 minutter giver dejen tid til at blive luftig!',
+        mediaType: 'video',
+        mediaSrc: 'video_rising.mp4',
+        assetId: 'video_rising',
+        icon: '⏳',
+        flowPrompt: '3D claymation dough ball inside a bowl under a tea towel slowly expanding to twice its size, time lapse effect'
+      },
+      {
+        num: 6,
+        title: 'Rul dejen ud på bagepapir 🫓',
+        text: 'Tag den luftige dej ud. Læg den på bagepapir. Tryk den flad med dine hænder eller rul med kagerullen, til den er rund som en sol!',
+        mathHint: '💡 Gør dejen stor og rund som en tallerken.',
         mediaType: 'video',
         mediaSrc: 'video_step1.mp4',
         assetId: 'video_step1',
@@ -50,7 +99,7 @@ const recipeData = {
         flowPrompt: '3D claymation rolling out pizza dough with rolling pin'
       },
       {
-        num: 3,
+        num: 7,
         title: 'Smør tomatsauce på 🍅',
         text: 'Brug bagsiden af en stor ske. Tag 3 spiseskefulde tomatsauce og smør det ud i runde cirkler fra midten. Gem 1 cm kant uden sauce!',
         mathHint: '💡 Tæl skefulde: 1... 2... 3 skefulde!',
@@ -61,7 +110,7 @@ const recipeData = {
         flowPrompt: '3D claymation spoon spreading red tomato sauce on dough'
       },
       {
-        num: 4,
+        num: 8,
         title: 'Drys ost og læg fyld 🧀',
         text: 'Drys osten ud over pizzaen som hvid og gul sne. Læg derefter dit yndlingsfyld ovenpå.',
         mathHint: '💡 Kan du lægge 6 stykker skinke eller pepperoni på pizzaen?',
@@ -72,9 +121,9 @@ const recipeData = {
         flowPrompt: '3D claymation hands sprinkling shredded cheese and toppings'
       },
       {
-        num: 5,
+        num: 9,
         title: 'Spørg en voksen om hjælp! 👨‍👩‍👧',
-        text: 'Ovnen er MEGET varm. Ræk op i hånden og spørg en voksen om at sætte pizzaen i ovnen for dig!',
+        text: 'Ovnen er MEGET varm. Spørg en voksen om at sætte pizzaen ind i den varme ovn for dig!',
         mathHint: '⚠️ Husk: Kun voksne rører ved den varme ovn!',
         mediaType: 'video',
         mediaSrc: 'video_step5.mp4',
@@ -83,9 +132,9 @@ const recipeData = {
         flowPrompt: '3D claymation adult with oven mitts putting pizza in oven'
       },
       {
-        num: 6,
+        num: 10,
         title: 'Bage-tid i ovnen! ⏱️',
-        text: 'Pizzaen skal bage i ca. 10 minutter indtil osten bobler og skorpen er sprød.',
+        text: 'Pizzaen skal bage i ca. 10 minutter indtil osten bobler og skorpen er sprød og gylden.',
         hasTimer: true,
         timerMinutes: 10,
         mediaType: 'video',
@@ -95,9 +144,9 @@ const recipeData = {
         flowPrompt: '3D claymation pizza baking in oven bubbling deliciously'
       },
       {
-        num: 7,
+        num: 11,
         title: 'Velbekomme, Nora! 🎉',
-        text: 'Du har lavet din helt egen pizza! Skær den ud i trekanter og nyd dit mesterværk!',
+        text: 'Du har lavet en hel pizza fra bunden med ægte hjemmelavet dej! Skær den ud i trekanter og nyd dit mesterværk!',
         mathHint: '💡 Hvis du skærer pizzaen på tværs, får du 8 lækre stykker!',
         mediaType: 'image',
         mediaSrc: 'hero_pizza.png',
@@ -202,7 +251,7 @@ function renderHome() {
     <div class="hero-banner">
       <div class="hero-text">
         <h2>Hej Nora! 👋</h2>
-        <p>Er du klar til at lave verdens bedste pizza i dag?</p>
+        <p>Er du klar til at lave ægte pizzadej fra bunden i dag?</p>
         <button class="hero-btn" onclick="openIngredients('pizza')">Start Pizza-eventyr 🍕</button>
       </div>
       <div class="hero-illustration">👩‍🍳</div>
@@ -216,10 +265,10 @@ function renderHome() {
       <!-- PIZZA (Unlocked) -->
       <div class="recipe-card active-card" onclick="openIngredients('pizza')">
         <div class="recipe-img-box">🍕</div>
-        <div class="recipe-title">Sprød Pizza</div>
+        <div class="recipe-title">Sprød Pizza fra Bunden</div>
         <div class="recipe-tags">
-          <span class="tag">⏱️ 20 min</span>
-          <span class="tag">⭐ Let</span>
+          <span class="tag">⏱️ 45 min (inkl. hævning)</span>
+          <span class="tag">⭐ Superkok</span>
         </div>
         <button class="start-recipe-btn">Start Nu ✨</button>
       </div>
@@ -264,9 +313,9 @@ function openIngredients(recipeId) {
   const main = document.getElementById('mainView');
   main.innerHTML = `
     <div class="checklist-container">
-      <div class="step-num-badge">Trin 0 / 7</div>
+      <div class="step-num-badge">Trin 0 / ${recipe.steps.length}</div>
       <h2 class="step-title">Find ingredienserne frem 🛒</h2>
-      <p class="step-text">Tjek dit køkken og sæt et flueben ud for hver ingrediens, når du har fundet den!</p>
+      <p class="step-text">Tjek dit køkken og sæt et flueben ud for hver ting, når du har fundet den!</p>
 
       <div class="checklist-grid">
         ${recipe.ingredients.map(ing => `
@@ -280,7 +329,7 @@ function openIngredients(recipeId) {
 
       <div class="step-nav-bar">
         <button class="big-btn prev" onclick="goHome()">⬅️ Tilbage</button>
-        <button class="big-btn next" onclick="openPizzaRecipe()">Klar! Start madlavning ➡️</button>
+        <button class="big-btn next" onclick="openPizzaRecipe()">Klar! Lav dej ➡️</button>
       </div>
     </div>
   `;
@@ -301,6 +350,11 @@ function openPizzaRecipe(stepIdx = 0) {
 
   const recipe = recipeData.pizza;
   const step = recipe.steps[stepIdx];
+
+  // Set default timer duration depending on step
+  if (step.hasTimer) {
+    state.timerSeconds = (step.timerMinutes || 10) * 60;
+  }
 
   const main = document.getElementById('mainView');
   main.innerHTML = `
@@ -347,11 +401,11 @@ function openPizzaRecipe(stepIdx = 0) {
             ` : ''}
           </div>
 
-          <!-- IN-APP TIMER (For oven step) -->
+          <!-- IN-APP TIMER (For dough rising & oven steps) -->
           ${step.hasTimer ? `
             <div class="timer-container">
-              <div style="font-family: var(--font-heading); color: #718096;">Bage-Timer ⏱️</div>
-              <div class="timer-display" id="timerDisplay">10:00</div>
+              <div style="font-family: var(--font-heading); color: #718096;">Nedtællings-Timer ⏱️</div>
+              <div class="timer-display" id="timerDisplay">${formatSeconds(state.timerSeconds)}</div>
               <div class="timer-controls">
                 <button class="timer-btn start" onclick="startTimer()">Start Timer 🚀</button>
                 <button class="timer-btn stop" onclick="stopTimer()">Stop 🛑</button>
@@ -382,14 +436,16 @@ function openPizzaRecipe(stepIdx = 0) {
 }
 
 // TIMER LOGIC
+function formatSeconds(totalSecs) {
+  const mins = Math.floor(totalSecs / 60);
+  const secs = totalSecs % 60;
+  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
 function startTimer() {
   sounds.playClick();
   if (state.timerRunning) return;
   state.timerRunning = true;
-  
-  if (!state.timerSeconds || state.timerSeconds <= 0) {
-    state.timerSeconds = 600; // 10 min
-  }
 
   state.timerInterval = setInterval(() => {
     state.timerSeconds--;
@@ -399,7 +455,7 @@ function startTimer() {
       clearInterval(state.timerInterval);
       state.timerRunning = false;
       sounds.playFanfare();
-      alert('⏰ DING DING DING! Pizzaen er klar!');
+      alert('⏰ DING DING DING! Tiden er gået! Klar til næste skridt!');
     }
   }, 1000);
 }
@@ -413,9 +469,7 @@ function stopTimer() {
 function updateTimerDisplay() {
   const display = document.getElementById('timerDisplay');
   if (!display) return;
-  const mins = Math.floor(state.timerSeconds / 60);
-  const secs = state.timerSeconds % 60;
-  display.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  display.innerText = formatSeconds(state.timerSeconds);
 }
 
 // FINISH RECIPE CELEBRATION
@@ -440,7 +494,7 @@ function finishRecipe() {
         SEJT GÅET, NORA! 🎉
       </h1>
       <p style="font-size: 1.4rem; font-weight: bold; color: var(--text-dark); margin-bottom: 24px;">
-        Du er nu en rigtig Pizza-Mesterkok! Du har optjent 3 nye stjerner! ⭐⭐⭐
+        Du har lavet en hel pizza helt fra bunden af! Du har optjent 3 nye stjerner! ⭐⭐⭐
       </p>
 
       <div style="display: flex; gap: 16px; justify-content: center;">
@@ -464,7 +518,7 @@ function openBadges() {
       <div class="badges-grid">
         <div class="badge-card">
           <div class="badge-icon">🍕</div>
-          <div class="badge-title">Pizza-Mester</div>
+          <div class="badge-title">Dej-Mester & Pizza-Mester</div>
           <span class="tag" style="background:#E6FFFA; color:#049A73;">Opnået!</span>
         </div>
 
