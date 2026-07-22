@@ -62,7 +62,7 @@ body {
 
 /* TOPBAR */
 .top-bar {
-  height: 80px;
+  min-height: 80px;
   background: var(--bg-card);
   padding: 12px 24px;
   display: flex;
@@ -71,6 +71,7 @@ body {
   border-bottom: 4px solid #F1F3F5;
   box-shadow: 0 4px 12px rgba(0,0,0,0.03);
   z-index: 10;
+  gap: 16px;
 }
 
 .logo-area {
@@ -78,28 +79,37 @@ body {
   align-items: center;
   gap: 12px;
   cursor: pointer;
+  flex-shrink: 1;
 }
 
 .custom-logo-img {
-  width: 56px;
-  height: 56px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--primary-pink);
   box-shadow: 0 4px 8px rgba(239, 71, 111, 0.25);
+  flex-shrink: 0;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .logo-text h1 {
   font-family: var(--font-heading);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: var(--primary-pink);
-  line-height: 1.1;
+  line-height: 1.2;
+  margin: 0;
 }
 
 .sub-logo {
   font-size: 0.85rem;
   color: var(--text-muted);
   font-weight: 700;
+  margin-top: 2px;
 }
 
 .user-badge {
@@ -114,6 +124,7 @@ body {
   align-items: center;
   gap: 8px;
   box-shadow: 0 4px 0px #F6E05E;
+  flex-shrink: 0;
 }
 
 .star-icon {
@@ -135,11 +146,11 @@ body {
   flex-direction: column;
 }
 
-/* HOME VIEW */
+/* HERO BANNER - FEJLFIX: INGEN OVERLAP AF TEKST & BILLEDER */
 .hero-banner {
   background: linear-gradient(135deg, #FFD166 0%, #FF9F1C 100%);
   border-radius: var(--border-radius-lg);
-  padding: 24px;
+  padding: 24px 28px;
   color: #2B2D42;
   display: flex;
   align-items: center;
@@ -148,34 +159,63 @@ body {
   position: relative;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(255, 159, 28, 0.25);
+  gap: 20px;
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 640px) {
+  .hero-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.hero-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+@media (max-width: 640px) {
+  .hero-text {
+    align-items: center;
+  }
 }
 
 .hero-text h2 {
   font-family: var(--font-heading);
-  font-size: 2.2rem;
+  font-size: 2rem;
+  line-height: 1.25;
   margin-bottom: 8px;
   color: #5C2A00;
+  word-break: break-word;
 }
 
 .hero-text p {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  max-width: 480px;
+  line-height: 1.4;
   color: #7A3E00;
+  margin-bottom: 16px;
+  max-width: 500px;
 }
 
 .hero-btn {
-  margin-top: 16px;
   background: var(--primary-green);
   color: white;
   border: none;
   font-family: var(--font-heading);
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   padding: 14px 28px;
   border-radius: var(--border-radius-md);
   cursor: pointer;
   box-shadow: 0 6px 0px #049A73;
   transition: transform 0.1s, box-shadow 0.1s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .hero-btn:active {
@@ -184,13 +224,15 @@ body {
 }
 
 .custom-hero-img {
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   border-radius: 24px;
   object-fit: cover;
   border: 4px solid white;
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   animation: floatPizza 3s ease-in-out infinite;
+  flex-shrink: 0;
+  z-index: 1;
 }
 
 @keyframes floatPizza {
@@ -264,12 +306,15 @@ body {
   font-family: var(--font-heading);
   font-size: 1.5rem;
   margin-bottom: 6px;
+  line-height: 1.25;
 }
 
 .recipe-tags {
   display: flex;
   gap: 8px;
   margin-bottom: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .tag {
@@ -369,53 +414,26 @@ body {
   }
 }
 
-/* MEDIA CONTAINER (Google Flow Video or Placeholder) */
+/* MEDIA CONTAINER (Optimered Video / Grafik Performance) */
 .media-wrapper {
-  background: #F8FAFC;
-  border: 3px dashed #CBD5E0;
+  background: #000000;
   border-radius: var(--border-radius-md);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px;
   position: relative;
-  min-height: 240px;
+  min-height: 260px;
+  max-height: 360px;
   overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 
 .media-wrapper video, .media-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: var(--border-radius-sm);
-}
-
-.placeholder-box {
-  text-align: center;
-  padding: 12px;
-}
-
-.placeholder-icon {
-  font-size: 4rem;
-  margin-bottom: 8px;
+  border-radius: var(--border-radius-md);
   display: block;
-}
-
-.placeholder-text {
-  font-family: var(--font-heading);
-  color: var(--primary-blue);
-  font-size: 1.1rem;
-}
-
-.asset-tag {
-  margin-top: 8px;
-  background: #E2E8F0;
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 0.75rem;
-  font-family: monospace;
-  color: #4A5568;
 }
 
 /* STEP DETAILS & INSTRUCTIONS */
@@ -442,6 +460,7 @@ body {
   font-size: 1.8rem;
   color: var(--text-dark);
   margin-bottom: 10px;
+  line-height: 1.25;
 }
 
 .step-text {

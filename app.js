@@ -198,10 +198,27 @@ class SoundFX {
 
 const sounds = new SoundFX();
 
+// VIDEO PRELOADER FOR INSTANT PLAYBACK PERFORMANCE
+function preloadRecipeVideos() {
+  const pizzaSteps = recipeData.pizza.steps;
+  pizzaSteps.forEach(step => {
+    if (step.mediaType === 'video' && step.mediaSrc) {
+      const videoPreloader = document.createElement('video');
+      videoPreloader.preload = 'auto';
+      videoPreloader.src = step.mediaSrc;
+      videoPreloader.muted = true;
+      videoPreloader.style.display = 'none';
+      document.body.appendChild(videoPreloader);
+    }
+  });
+}
+
 // INITIALIZATION
 document.addEventListener('DOMContentLoaded', () => {
   updateStarDisplay();
   renderHome();
+  // Preload videos in background after initial render
+  setTimeout(preloadRecipeVideos, 1000);
 });
 
 function updateStarDisplay() {
@@ -352,10 +369,10 @@ function openPizzaRecipe(stepIdx = 0) {
     <div class="recipe-step-card">
       <div class="step-content-grid">
         
-        <!-- LEFT: REAL GOOGLE FLOW VIDEO / IMAGE DISPLAY -->
+        <!-- LEFT: OPTIMIZED INSTANT VIDEO / IMAGE DISPLAY -->
         <div class="media-wrapper">
           ${step.mediaType === 'video' ? `
-            <video src="${step.mediaSrc}" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; border-radius:16px;"></video>
+            <video src="${step.mediaSrc}" preload="auto" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; border-radius:16px;"></video>
           ` : `
             <img src="${step.mediaSrc}" alt="${step.title}" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
           `}
@@ -408,6 +425,12 @@ function openPizzaRecipe(stepIdx = 0) {
 
     </div>
   `;
+
+  // Explicitly trigger play() on video element to guarantee zero-delay start on iPad/Safari
+  const activeVideo = main.querySelector('video');
+  if (activeVideo) {
+    activeVideo.play().catch(() => {});
+  }
 }
 
 // TIMER LOGIC
