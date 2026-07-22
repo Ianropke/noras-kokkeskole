@@ -14,23 +14,25 @@ const state = {
   checklist: {}
 };
 
-// RECIPE DATA STRUCTURE WITH REAL GOOGLE FLOW ASSETS
+// RECIPE DATA STRUCTURE - KRITISK REDIGERET AF KULINARISK WEBRADAKTØR
 const recipeData = {
   pizza: {
     id: 'pizza',
     title: 'Noras Hjemmelavede Pizza 🍕',
     subtitle: 'Lær at lave dej fra bunden, hæve den og bage den sprød!',
     ingredients: [
-      { id: 'yeast_dough', name: 'Gær & Pizzadej Råvarer', img: 'assets/Pizza_dough_ball_on_board_202607221138.jpeg' },
-      { id: 'sauce', name: 'Tomatsauce & Ske', img: 'assets/Bowl_with_tomato_sauce_spoon_202607221138.jpeg' },
-      { id: 'cheese', name: 'Revet Mozzarella Ost', img: 'assets/Bowl_filled_with_mozzarella_cheese_202607221138.jpeg' },
+      { id: 'yeast', name: '25g Frisk Gær (eller 1 tsk tørgær)', img: 'assets/Pizza_dough_ball_on_board_202607221138.jpeg' },
+      { id: 'water', name: '2 dl Lunkent Vand (ca. 37°C)', img: 'assets/Pizza_dough_ball_on_board_202607221138.jpeg' },
+      { id: 'flour_oil_salt', name: '3 kopper Mel, 1 spsk Olie & 1 tsk Salt', img: 'assets/Pizza_dough_ball_on_board_202607221138.jpeg' },
+      { id: 'sauce', name: '3 spiseskefulde Tomatsauce', img: 'assets/Bowl_with_tomato_sauce_spoon_202607221138.jpeg' },
+      { id: 'cheese', name: '2 kopper Revet Mozzarella Ost', img: 'assets/Bowl_filled_with_mozzarella_cheese_202607221138.jpeg' },
       { id: 'topping', name: 'Favorit-fyld (Pepperoni / Skinke)', img: 'assets/Bowls_filled_with_toppings_2K_202607221137.jpeg' }
     ],
     steps: [
       {
         num: 1,
         title: 'Vask hænderne godt! 🧼',
-        text: 'Før vi rører ved dejen, skal vi vaske hænder med vand og sæbe. Tæl langsomt til 20 mens du vasker!',
+        text: 'Før vi rører ved dejen, skal vi vaske hænder med varmt vand og sæbe. Tæl langsomt til 20 mens du vasker boblerne væk!',
         mathHint: '💡 Tæl: 1, 2, 3... helt til 20!',
         mediaType: 'video',
         mediaSrc: 'assets/Child_hands_washing_with_soap_202607221138.mp4',
@@ -38,9 +40,9 @@ const recipeData = {
       },
       {
         num: 2,
-        title: 'Opløs gæren i vand 🥣',
-        text: 'Hæld 2 dl lunkent vand i en stor skål. Smuldr gæren i vandet og rør med en ske, indtil gæren er helt smeltet!',
-        mathHint: '💡 Tæl: 2 deciliter vand i målebægeret.',
+        title: 'Opløs gæren i lunkent vand 🥣',
+        text: 'Hæld 2 dl lunkent vand i skålen. Vandet skal mærkes rart mod dit håndled (ca. 37°C - ikke for varmt!). Smuldr gæren i vandet og rør med en ske, indtil gæren er smeltet.',
+        mathHint: '💡 Tæl 2 deciliter vand op i målebægeret.',
         mediaType: 'video',
         mediaSrc: 'assets/Hands_crumbling_yeast_in_bowl_202607221143.mp4',
         icon: '🥣'
@@ -48,7 +50,7 @@ const recipeData = {
       {
         num: 3,
         title: 'Tilsæt olie, salt og mel 🌾',
-        text: 'Hæld 1 spiseskefuld olie og 1 teskefuld salt i skålen. Tilsæt derefter 3 kopper mel én ad gangen.',
+        text: 'Hæld 1 spiseskefuld olie og 1 teskefuld salt i vandet. Tilsæt derefter 3 kopper hvedemel – én kop ad gangen, mens du rører.',
         mathHint: '💡 Tæl kopperne mel: 1... 2... 3 kopper!',
         mediaType: 'image',
         mediaSrc: 'assets/Pizza_dough_ball_on_board_202607221138.jpeg',
@@ -56,9 +58,9 @@ const recipeData = {
       },
       {
         num: 4,
-        title: 'Ælt dejen flittigt! 👐',
-        text: 'Brug dine hænder! Tryk, fold og ælt dejen på bordet, til den bliver en glat, blød og dejlig bold.',
-        mathHint: '💡 Ælt dejen i ca. 3 minutter til den ikke klistrer mere!',
+        title: 'Ælt dejen med hænderne 👐',
+        text: 'Drys lidt mel på bordet. Tryk, fold og ælt dejen på bordet med dine hænder i 3 minutter, til den bliver en blød og glat dejbold!',
+        mathHint: '💡 Ælt i 3 minutter til dejen slip-klistrer fra bordet!',
         mediaType: 'video',
         mediaSrc: 'assets/Child_hands_kneading_pizza_dough_202607221143.mp4',
         icon: '👐'
@@ -66,19 +68,19 @@ const recipeData = {
       {
         num: 5,
         title: 'Hævetid! (Dejen skal vokse) ⏳',
-        text: 'Læg dejen tilbage i skålen og læg et rent viskestykke over. Sæt timeren på 30 minutter og se dejen vokse sig dobbelt så stor!',
+        text: 'Læg dejen tilbage i skålen og læg et viskestykke over. Sæt timeren på 30 minutter og se gæren trylle dejen dobbelt så stor!',
         hasTimer: true,
         timerMinutes: 30,
-        mathHint: '💡 30 minutter giver dejen tid til at blive luftig!',
+        mathHint: '💡 30 minutters hævetid giver en dejlig luftig bund!',
         mediaType: 'video',
         mediaSrc: 'assets/Dough_ball_expanding_in_bowl_202607221143.mp4',
         icon: '⏳'
       },
       {
         num: 6,
-        title: 'Rul dejen ud på bagepapir 🫓',
-        text: 'Tag den luftige dej ud. Læg den på bagepapir. Tryk den flad med dine hænder eller rul med kagerullen, til den er rund som en sol!',
-        mathHint: '💡 Gør dejen stor og rund som en tallerken.',
+        title: 'Tænd ovnen & Rul dejen ud 🫓🔥',
+        text: 'Spørg en voksen om at tænde ovnen på 225°C varmluft NU, så den bliver rødglødende varm! Rul derefter din dej ud på et stykke bagepapir til den er rund som en sol.',
+        mathHint: '⚠️ Vigtigt: Ovnen skal tændes nu, så den er varm!',
         mediaType: 'video',
         mediaSrc: 'assets/Hands_kneading_pizza_dough_1080p_202607221138.mp4',
         icon: '🫓'
@@ -86,7 +88,7 @@ const recipeData = {
       {
         num: 7,
         title: 'Smør tomatsauce på 🍅',
-        text: 'Brug bagsiden af en stor ske. Tag 3 spiseskefulde tomatsauce og smør det ud i runde cirkler fra midten. Gem 1 cm kant uden sauce!',
+        text: 'Brug bagsiden af en stor ske. Tag 3 spiseskefulde tomatsauce og smør det ud i runde cirkler fra midten. Gem 1 cm kant uden sauce til skorpen!',
         mathHint: '💡 Tæl skefulde: 1... 2... 3 skefulde!',
         mediaType: 'video',
         mediaSrc: 'assets/Spoon_spreading_sauce_on_pizza_202607221138.mp4',
@@ -95,7 +97,7 @@ const recipeData = {
       {
         num: 8,
         title: 'Drys ost og læg fyld 🧀',
-        text: 'Drys osten ud over pizzaen som hvid og gul sne. Læg derefter dit yndlingsfyld ovenpå.',
+        text: 'Drys osten ud over pizzaen som hvid og gul sne. Læg derefter dit yndlingsfyld ovenpå osten.',
         mathHint: '💡 Kan du lægge 6 stykker skinke eller pepperoni på pizzaen?',
         mediaType: 'video',
         mediaSrc: 'assets/Hands_sprinkling_cheese_on_pizza_202607221138.mp4',
@@ -104,8 +106,8 @@ const recipeData = {
       {
         num: 9,
         title: 'Spørg en voksen om hjælp! 👨‍👩‍👧',
-        text: 'Ovnen er MEGET varm. Spørg en voksen om at sætte pizzaen ind i den varme ovn for dig!',
-        mathHint: '⚠️ Husk: Kun voksne rører ved den varme ovn!',
+        text: 'Ovnen er nu 225°C varm! Ræk op og spørg en voksen om at bære bagepladen med pizzaen ind i den varme ovn.',
+        mathHint: '⚠️ Husk: Kun voksne bærer bagepladen ind i den varme ovn!',
         mediaType: 'video',
         mediaSrc: 'assets/Hands_putting_pizza_in_oven_202607221138.mp4',
         icon: '🔥'
@@ -113,7 +115,7 @@ const recipeData = {
       {
         num: 10,
         title: 'Bage-tid i ovnen! ⏱️',
-        text: 'Pizzaen skal bage i ca. 10 minutter indtil osten bobler og skorpen er sprød og gylden.',
+        text: 'Pizzaen skal bage i ca. 10 minutter, indtil osten bobler og skorpen bliver gylden og sprød.',
         hasTimer: true,
         timerMinutes: 10,
         mediaType: 'video',
@@ -123,7 +125,7 @@ const recipeData = {
       {
         num: 11,
         title: 'Velbekomme, Nora! 🎉',
-        text: 'Du har lavet en hel pizza fra bunden med ægte hjemmelavet dej! Skær den ud i trekanter og nyd dit mesterværk!',
+        text: 'Du har lavet en hel pizza fra bunden med ægte hjemmelavet dej! Skær den ud i trekanter og nyd dit sprøde mesterværk!',
         mathHint: '💡 Hvis du skærer pizzaen på tværs, får du 8 lækre stykker!',
         mediaType: 'video',
         mediaSrc: 'assets/Pizza_cutter_slicing_hot_pizza_202607221138.mp4',
