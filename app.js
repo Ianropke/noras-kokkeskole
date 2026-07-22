@@ -149,7 +149,7 @@ const recipeData = {
         text: 'Du har lavet en hel pizza fra bunden med ægte hjemmelavet dej! Skær den ud i trekanter og nyd dit mesterværk!',
         mathHint: '💡 Hvis du skærer pizzaen på tværs, får du 8 lækre stykker!',
         mediaType: 'image',
-        mediaSrc: 'hero_pizza.png',
+        mediaSrc: 'assets/hero_pizza.jpg',
         assetId: 'hero_pizza',
         icon: '🌟',
         isFinal: true
@@ -254,7 +254,7 @@ function renderHome() {
         <p>Er du klar til at lave ægte pizzadej fra bunden i dag?</p>
         <button class="hero-btn" onclick="openIngredients('pizza')">Start Pizza-eventyr 🍕</button>
       </div>
-      <div class="hero-illustration">👩‍🍳</div>
+      <img src="assets/hero_pizza.jpg" alt="Glad pizza" class="custom-hero-img">
     </div>
 
     <div class="section-title">
@@ -264,7 +264,9 @@ function renderHome() {
     <div class="recipes-grid">
       <!-- PIZZA (Unlocked) -->
       <div class="recipe-card active-card" onclick="openIngredients('pizza')">
-        <div class="recipe-img-box">🍕</div>
+        <div class="recipe-img-box">
+          <img src="assets/hero_pizza.jpg" alt="Pizza" class="custom-card-img">
+        </div>
         <div class="recipe-title">Sprød Pizza fra Bunden</div>
         <div class="recipe-tags">
           <span class="tag">⏱️ 45 min (inkl. hævning)</span>
@@ -276,7 +278,7 @@ function renderHome() {
       <!-- PANCAKES (Locked preview) -->
       <div class="recipe-card locked-card" onclick="soundLocked()">
         <span class="lock-badge">🔒 Låses op snart</span>
-        <div class="recipe-img-box">🥞</div>
+        <div class="recipe-img-box" style="display:flex; align-items:center; justify-content:center; background:#FFF5F5; font-size:3.5rem;">🥞</div>
         <div class="recipe-title">Lækre Pandekager</div>
         <div class="recipe-tags">
           <span class="tag">⏱️ 15 min</span>
@@ -287,7 +289,7 @@ function renderHome() {
       <!-- SMOOTHIE (Locked preview) -->
       <div class="recipe-card locked-card" onclick="soundLocked()">
         <span class="lock-badge">🔒 Låses op snart</span>
-        <div class="recipe-img-box">🍓</div>
+        <div class="recipe-img-box" style="display:flex; align-items:center; justify-content:center; background:#FFF5F5; font-size:3.5rem;">🍓</div>
         <div class="recipe-title">Frugt Smoothie</div>
         <div class="recipe-tags">
           <span class="tag">⏱️ 5 min</span>
@@ -489,7 +491,7 @@ function finishRecipe() {
   const main = document.getElementById('mainView');
   main.innerHTML = `
     <div style="text-align: center; padding: 40px 20px; background: white; border-radius: 24px; border: 4px solid var(--primary-yellow);">
-      <div style="font-size: 6rem; animation: floatPizza 2s infinite ease-in-out;">🏆</div>
+      <img src="assets/pizza_trophy.jpg" alt="Pizza Trofæ" style="width:160px; height:160px; object-fit:cover; border-radius:24px; box-shadow:0 8px 24px rgba(0,0,0,0.15); animation: floatPizza 2s infinite ease-in-out;">
       <h1 style="font-family: var(--font-heading); font-size: 2.5rem; color: var(--primary-pink); margin: 16px 0;">
         SEJT GÅET, NORA! 🎉
       </h1>
@@ -517,13 +519,13 @@ function openBadges() {
 
       <div class="badges-grid">
         <div class="badge-card">
-          <div class="badge-icon">🍕</div>
+          <img src="assets/pizza_trophy.jpg" alt="Pizza Trofæ" class="custom-trophy-img">
           <div class="badge-title">Dej-Mester & Pizza-Mester</div>
           <span class="tag" style="background:#E6FFFA; color:#049A73;">Opnået!</span>
         </div>
 
         <div class="badge-card">
-          <div class="badge-icon">🧼</div>
+          <img src="assets/chef_mascot.jpg" alt="Kokke Mærke" class="custom-trophy-img">
           <div class="badge-title">Ren Vaskebjørn</div>
           <span class="tag" style="background:#E6FFFA; color:#049A73;">Opnået!</span>
         </div>
