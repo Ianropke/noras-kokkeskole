@@ -14,16 +14,16 @@ const state = {
   checklist: {}
 };
 
-// RECIPE DATA STRUCTURE - KRITISK REDIGERET AF KULINARISK WEBRADAKTØR
+// RECIPE DATA STRUCTURE WITH DEDICATED GOOGLE FLOW / PIXAR ASSETS FOR EVERY INGREDIENT
 const recipeData = {
   pizza: {
     id: 'pizza',
     title: 'Noras Hjemmelavede Pizza 🍕',
     subtitle: 'Lær at lave dej fra bunden, hæve den og bage den sprød!',
     ingredients: [
-      { id: 'yeast', name: '25g Frisk Gær (eller 1 tsk tørgær)', img: 'assets/Pizza_dough_ball_on_board_202607221138.jpeg' },
-      { id: 'water', name: '2 dl Lunkent Vand (ca. 37°C)', img: 'assets/Pizza_dough_ball_on_board_202607221138.jpeg' },
-      { id: 'flour_oil_salt', name: '3 kopper Mel, 1 spsk Olie & 1 tsk Salt', img: 'assets/Pizza_dough_ball_on_board_202607221138.jpeg' },
+      { id: 'yeast', name: '25g Frisk Gær (eller 1 tsk tørgær)', img: 'assets/ingrediens_yeast.jpg' },
+      { id: 'water', name: '2 dl Lunkent Vand (ca. 37°C)', img: 'assets/ingrediens_water.jpg' },
+      { id: 'flour_oil_salt', name: '3 kopper Mel, 1 spsk Olie & 1 tsk Salt', img: 'assets/ingrediens_flour_salt_oil.jpg' },
       { id: 'sauce', name: '3 spiseskefulde Tomatsauce', img: 'assets/Bowl_with_tomato_sauce_spoon_202607221138.jpeg' },
       { id: 'cheese', name: '2 kopper Revet Mozzarella Ost', img: 'assets/Bowl_filled_with_mozzarella_cheese_202607221138.jpeg' },
       { id: 'topping', name: 'Favorit-fyld (Pepperoni / Skinke)', img: 'assets/Bowls_filled_with_toppings_2K_202607221137.jpeg' }
@@ -53,7 +53,7 @@ const recipeData = {
         text: 'Hæld 1 spiseskefuld olie og 1 teskefuld salt i vandet. Tilsæt derefter 3 kopper hvedemel – én kop ad gangen, mens du rører.',
         mathHint: '💡 Tæl kopperne mel: 1... 2... 3 kopper!',
         mediaType: 'image',
-        mediaSrc: 'assets/Pizza_dough_ball_on_board_202607221138.jpeg',
+        mediaSrc: 'assets/ingrediens_flour_salt_oil.jpg',
         icon: '🌾'
       },
       {
@@ -300,7 +300,7 @@ function soundLocked() {
   alert('🔒 Du skal lave Pizzaen først for at låse op for flere opskrifter!');
 }
 
-// INGREDIENTS CHECKLIST VIEW
+// INGREDIENTS CHECKLIST VIEW WITH DEDICATED LARGE IMAGES
 function openIngredients(recipeId) {
   sounds.playClick();
   state.currentRecipe = recipeId;
@@ -318,7 +318,7 @@ function openIngredients(recipeId) {
         ${recipe.ingredients.map(ing => `
           <div class="check-item ${state.checklist[ing.id] ? 'checked' : ''}" onclick="toggleCheck('${ing.id}')">
             <div class="check-box">${state.checklist[ing.id] ? '✓' : ''}</div>
-            <img src="${ing.img}" alt="${ing.name}" style="width:54px; height:54px; border-radius:12px; object-fit:cover;">
+            <img src="${ing.img}" alt="${ing.name}" class="check-item-img">
             <span class="check-item-text">${ing.name}</span>
           </div>
         `).join('')}

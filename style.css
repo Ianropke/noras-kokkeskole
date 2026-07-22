@@ -568,31 +568,37 @@ body {
   color: #5C2A00;
 }
 
-/* INGREDIENTS CHECKLIST VIEW */
+/* INGREDIENTS CHECKLIST VIEW - STORT & TYDELIGT DESIGN MED DEDIKEREDE STORE BILLEDER */
 .checklist-container {
   background: var(--bg-card);
   border-radius: var(--border-radius-lg);
-  padding: 24px;
+  padding: 28px;
   border: 4px solid #E2E8F0;
 }
 
 .checklist-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin: 20px 0;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
 }
 
 .check-item {
-  background: #F7FAFC;
+  background: #F8FAFC;
   border: 3px solid #E2E8F0;
   border-radius: var(--border-radius-md);
-  padding: 16px;
+  padding: 18px 20px;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.check-item:hover {
+  transform: translateY(-2px);
+  border-color: #CBD5E0;
 }
 
 .check-item.checked {
@@ -601,15 +607,17 @@ body {
 }
 
 .check-box {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
   border: 3px solid #CBD5E0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   background: white;
+  flex-shrink: 0;
+  font-weight: bold;
 }
 
 .check-item.checked .check-box {
@@ -618,13 +626,21 @@ body {
   color: white;
 }
 
-.check-item-icon {
-  font-size: 2.2rem;
+.check-item-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 18px;
+  object-fit: cover;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  flex-shrink: 0;
 }
 
 .check-item-text {
   font-family: var(--font-heading);
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+  line-height: 1.35;
+  color: var(--text-dark);
 }
 
 /* BADGES VIEW */
