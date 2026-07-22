@@ -14,20 +14,17 @@ const state = {
   checklist: {}
 };
 
-// RECIPE DATA STRUCTURE
+// RECIPE DATA STRUCTURE WITH REAL GOOGLE FLOW ASSETS
 const recipeData = {
   pizza: {
     id: 'pizza',
     title: 'Noras Hjemmelavede Pizza 🍕',
     subtitle: 'Lær at lave dej fra bunden, hæve den og bage den sprød!',
     ingredients: [
-      { id: 'yeast', name: '25g Frisk Gær (eller 1 tsk tørgær)', icon: '🧊' },
-      { id: 'water', name: '2 dl Lunkent Vand', icon: '💧' },
-      { id: 'flour', name: '3 kopper Hvedemel', icon: '🌾' },
-      { id: 'salt_oil', name: '1 tsk Salt & 1 spsk Olie', icon: '🧂' },
-      { id: 'sauce', name: '3 spiseskefulde Tomatsauce', icon: '🍅' },
-      { id: 'cheese', name: '2 kopper Revet Ost', icon: '🧀' },
-      { id: 'topping', name: 'Favorit-fyld (Skinke/Pepperoni)', icon: '🥓' }
+      { id: 'yeast_dough', name: 'Gær & Pizzadej Råvarer', img: 'assets/Pizza_dough_ball_on_board_202607221138.jpeg' },
+      { id: 'sauce', name: 'Tomatsauce & Ske', img: 'assets/Bowl_with_tomato_sauce_spoon_202607221138.jpeg' },
+      { id: 'cheese', name: 'Revet Mozzarella Ost', img: 'assets/Bowl_filled_with_mozzarella_cheese_202607221138.jpeg' },
+      { id: 'topping', name: 'Favorit-fyld (Pepperoni / Skinke)', img: 'assets/Bowls_filled_with_toppings_2K_202607221137.jpeg' }
     ],
     steps: [
       {
@@ -36,43 +33,35 @@ const recipeData = {
         text: 'Før vi rører ved dejen, skal vi vaske hænder med vand og sæbe. Tæl langsomt til 20 mens du vasker!',
         mathHint: '💡 Tæl: 1, 2, 3... helt til 20!',
         mediaType: 'video',
-        mediaSrc: 'hand_wash.mp4',
-        assetId: 'hand_wash',
-        icon: '🧼',
-        flowPrompt: '3D claymation hands washing under running tap with soapy bubbles'
+        mediaSrc: 'assets/Child_hands_washing_with_soap_202607221138.mp4',
+        icon: '🧼'
       },
       {
         num: 2,
         title: 'Opløs gæren i vand 🥣',
-        text: 'Hæld 2 dl lunkent vand i en stor skål. Smuldr gæren i vandet og rør med en ske, indtil gæren er helt smeltet og væk!',
+        text: 'Hæld 2 dl lunkent vand i en stor skål. Smuldr gæren i vandet og rør med en ske, indtil gæren er helt smeltet!',
         mathHint: '💡 Tæl: 2 deciliter vand i målebægeret.',
         mediaType: 'video',
-        mediaSrc: 'video_yeast.mp4',
-        assetId: 'video_yeast',
-        icon: '🥣',
-        flowPrompt: '3D claymation hands crumbling fresh yeast into a bowl of warm water and stirring with a spoon'
+        mediaSrc: 'assets/Hands_crumbling_yeast_in_bowl_202607221143.mp4',
+        icon: '🥣'
       },
       {
         num: 3,
         title: 'Tilsæt olie, salt og mel 🌾',
         text: 'Hæld 1 spiseskefuld olie og 1 teskefuld salt i skålen. Tilsæt derefter 3 kopper mel én ad gangen.',
         mathHint: '💡 Tæl kopperne mel: 1... 2... 3 kopper!',
-        mediaType: 'video',
-        mediaSrc: 'video_add_flour.mp4',
-        assetId: 'video_add_flour',
-        icon: '🌾',
-        flowPrompt: '3D claymation hands pouring flour cups, salt and oil into a bowl with yeast water'
+        mediaType: 'image',
+        mediaSrc: 'assets/Pizza_dough_ball_on_board_202607221138.jpeg',
+        icon: '🌾'
       },
       {
         num: 4,
         title: 'Ælt dejen flittigt! 👐',
-        text: 'Brug dine hænder! Tryk, fold og ælt dejen i skålen eller på bordet, til den bliver en glat, blød og dejlig bold.',
+        text: 'Brug dine hænder! Tryk, fold og ælt dejen på bordet, til den bliver en glat, blød og dejlig bold.',
         mathHint: '💡 Ælt dejen i ca. 3 minutter til den ikke klistrer mere!',
         mediaType: 'video',
-        mediaSrc: 'video_knead.mp4',
-        assetId: 'video_knead',
-        icon: '👐',
-        flowPrompt: '3D claymation child hands actively kneading a smooth pizza dough ball on a floured wooden table'
+        mediaSrc: 'assets/Child_hands_kneading_pizza_dough_202607221143.mp4',
+        icon: '👐'
       },
       {
         num: 5,
@@ -82,10 +71,8 @@ const recipeData = {
         timerMinutes: 30,
         mathHint: '💡 30 minutter giver dejen tid til at blive luftig!',
         mediaType: 'video',
-        mediaSrc: 'video_rising.mp4',
-        assetId: 'video_rising',
-        icon: '⏳',
-        flowPrompt: '3D claymation dough ball inside a bowl under a tea towel slowly expanding to twice its size, time lapse effect'
+        mediaSrc: 'assets/Dough_ball_expanding_in_bowl_202607221143.mp4',
+        icon: '⏳'
       },
       {
         num: 6,
@@ -93,10 +80,8 @@ const recipeData = {
         text: 'Tag den luftige dej ud. Læg den på bagepapir. Tryk den flad med dine hænder eller rul med kagerullen, til den er rund som en sol!',
         mathHint: '💡 Gør dejen stor og rund som en tallerken.',
         mediaType: 'video',
-        mediaSrc: 'video_step1.mp4',
-        assetId: 'video_step1',
-        icon: '🫓',
-        flowPrompt: '3D claymation rolling out pizza dough with rolling pin'
+        mediaSrc: 'assets/Hands_kneading_pizza_dough_1080p_202607221138.mp4',
+        icon: '🫓'
       },
       {
         num: 7,
@@ -104,10 +89,8 @@ const recipeData = {
         text: 'Brug bagsiden af en stor ske. Tag 3 spiseskefulde tomatsauce og smør det ud i runde cirkler fra midten. Gem 1 cm kant uden sauce!',
         mathHint: '💡 Tæl skefulde: 1... 2... 3 skefulde!',
         mediaType: 'video',
-        mediaSrc: 'video_step2.mp4',
-        assetId: 'video_step2',
-        icon: '🍅',
-        flowPrompt: '3D claymation spoon spreading red tomato sauce on dough'
+        mediaSrc: 'assets/Spoon_spreading_sauce_on_pizza_202607221138.mp4',
+        icon: '🍅'
       },
       {
         num: 8,
@@ -115,10 +98,8 @@ const recipeData = {
         text: 'Drys osten ud over pizzaen som hvid og gul sne. Læg derefter dit yndlingsfyld ovenpå.',
         mathHint: '💡 Kan du lægge 6 stykker skinke eller pepperoni på pizzaen?',
         mediaType: 'video',
-        mediaSrc: 'video_step3.mp4',
-        assetId: 'video_step3',
-        icon: '🥓',
-        flowPrompt: '3D claymation hands sprinkling shredded cheese and toppings'
+        mediaSrc: 'assets/Hands_sprinkling_cheese_on_pizza_202607221138.mp4',
+        icon: '🥓'
       },
       {
         num: 9,
@@ -126,10 +107,8 @@ const recipeData = {
         text: 'Ovnen er MEGET varm. Spørg en voksen om at sætte pizzaen ind i den varme ovn for dig!',
         mathHint: '⚠️ Husk: Kun voksne rører ved den varme ovn!',
         mediaType: 'video',
-        mediaSrc: 'video_step5.mp4',
-        assetId: 'video_step5',
-        icon: '🔥',
-        flowPrompt: '3D claymation adult with oven mitts putting pizza in oven'
+        mediaSrc: 'assets/Hands_putting_pizza_in_oven_202607221138.mp4',
+        icon: '🔥'
       },
       {
         num: 10,
@@ -138,19 +117,16 @@ const recipeData = {
         hasTimer: true,
         timerMinutes: 10,
         mediaType: 'video',
-        mediaSrc: 'video_step6.mp4',
-        assetId: 'video_step6',
-        icon: '🍕',
-        flowPrompt: '3D claymation pizza baking in oven bubbling deliciously'
+        mediaSrc: 'assets/Pizza_baking_inside_oven_1080p_202607221138.mp4',
+        icon: '🍕'
       },
       {
         num: 11,
         title: 'Velbekomme, Nora! 🎉',
         text: 'Du har lavet en hel pizza fra bunden med ægte hjemmelavet dej! Skær den ud i trekanter og nyd dit mesterværk!',
         mathHint: '💡 Hvis du skærer pizzaen på tværs, får du 8 lækre stykker!',
-        mediaType: 'image',
-        mediaSrc: 'assets/hero_pizza.jpg',
-        assetId: 'hero_pizza',
+        mediaType: 'video',
+        mediaSrc: 'assets/Pizza_cutter_slicing_hot_pizza_202607221138.mp4',
         icon: '🌟',
         isFinal: true
       }
@@ -323,7 +299,7 @@ function openIngredients(recipeId) {
         ${recipe.ingredients.map(ing => `
           <div class="check-item ${state.checklist[ing.id] ? 'checked' : ''}" onclick="toggleCheck('${ing.id}')">
             <div class="check-box">${state.checklist[ing.id] ? '✓' : ''}</div>
-            <span class="check-item-icon">${ing.icon}</span>
+            <img src="${ing.img}" alt="${ing.name}" style="width:54px; height:54px; border-radius:12px; object-fit:cover;">
             <span class="check-item-text">${ing.name}</span>
           </div>
         `).join('')}
@@ -376,16 +352,13 @@ function openPizzaRecipe(stepIdx = 0) {
     <div class="recipe-step-card">
       <div class="step-content-grid">
         
-        <!-- LEFT: VISUAL MEDIA / GOOGLE FLOW PLACEHOLDER -->
+        <!-- LEFT: REAL GOOGLE FLOW VIDEO / IMAGE DISPLAY -->
         <div class="media-wrapper">
-          <div class="placeholder-box">
-            <span class="placeholder-icon">${step.icon}</span>
-            <div class="placeholder-text">Google Flow Video / Grafik</div>
-            <div class="asset-tag">Asset ID: ${step.assetId}</div>
-            <p style="font-size:0.8rem; margin-top:6px; color:#718096">
-              Prompt: "${step.flowPrompt}"
-            </p>
-          </div>
+          ${step.mediaType === 'video' ? `
+            <video src="${step.mediaSrc}" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; border-radius:16px;"></video>
+          ` : `
+            <img src="${step.mediaSrc}" alt="${step.title}" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
+          `}
         </div>
 
         <!-- RIGHT: INSTRUCTIONS & MATH HINTS -->
