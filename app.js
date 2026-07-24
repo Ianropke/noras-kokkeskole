@@ -396,13 +396,15 @@ function renderHome() {
         </div>
       `}
 
-      <!-- SMOOTHIE (Locked preview) -->
-      <div class="recipe-card locked-card" onclick="soundLocked('Smoothie kræver 10 stjerner!')">
+      <!-- CHOKOLADEKAGE (Locked preview) -->
+      <div class="recipe-card locked-card" onclick="soundLocked('Chokoladekage kræver 10 stjerner! ⭐')">
         <span class="lock-badge">🔒 Låses op ved 10 ⭐</span>
-        <div class="recipe-img-box" style="display:flex; align-items:center; justify-content:center; background:#FFF5F5; font-size:3.5rem;">🍓</div>
-        <div class="recipe-title">Frugt Smoothie</div>
+        <div class="recipe-img-box">
+          <img src="assets/hero_chocolate_cake.jpg" alt="Chokoladekage" class="custom-card-img" style="filter: grayscale(40%);">
+        </div>
+        <div class="recipe-title">Lækker Chokoladekage</div>
         <div class="recipe-tags">
-          <span class="tag">⏱️ 5 min</span>
+          <span class="tag">⏱️ 30 min</span>
           <span class="tag">⭐ Kræver 10 stjerner</span>
         </div>
       </div>
