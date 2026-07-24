@@ -139,17 +139,17 @@ const recipeData = {
     title: 'Noras Lækre Pandekager 🥞',
     subtitle: 'Pisk dejen skummende, lad den hvile og steg gyldne pandekager!',
     ingredients: [
-      { id: 'eggs', name: '3 Økologiske Æg', img: 'assets/ingrediens_pancake_eggs.jpg' },
-      { id: 'milk', name: '4 dl Frisk Mælk', img: 'assets/ingrediens_pancake_milk.jpg' },
+      { id: 'eggs', name: '3 Økologiske Æg', img: 'assets/3_brown_eggs_carton_2K_202607242300.jpeg' },
+      { id: 'milk', name: '4 dl Frisk Mælk', img: 'assets/Glass_milk_pitcher_filled_milk_202607242300.jpeg' },
       { id: 'flour_sugar', name: '2 kopper Mel, 1 spsk Sukker & 1 knivspids Salt', img: 'assets/ingrediens_flour_salt_oil.jpg' },
-      { id: 'butter', name: '2 spsk Smør til stegning', img: 'assets/ingrediens_pancake_butter.jpg' },
-      { id: 'jam', name: 'Jordbærsyltetøj eller Sukker', img: 'assets/ingrediens_pancake_jam.jpg' }
+      { id: 'butter', name: '2 spsk Smør til stegning', img: 'assets/Butter_on_ceramic_plate_2K_202607242300.jpeg' },
+      { id: 'jam', name: 'Jordbærsyltetøj eller Sukker', img: 'assets/Jar_of_strawberry_jam_2K_202607242300.jpeg' }
     ],
     steps: [
       {
         num: 1,
         title: 'Vask hænderne godt! 🧼',
-        text: 'Før vi piskerr dejen, skal vi vaske hænder grundigt med varmt vand og sæbe. Tæl til 20 mens du vasker!',
+        text: 'Før vi pisker dejen, skal vi vaske hænder grundigt med varmt vand og sæbe. Tæl til 20 mens du vasker!',
         mathHint: '💡 Tæl: 1, 2, 3... helt til 20!',
         mediaType: 'video',
         mediaSrc: 'assets/Child_hands_washing_with_soap_202607221138.mp4',
@@ -160,8 +160,8 @@ const recipeData = {
         title: 'Slå 3 æg ud i skålen 🥚',
         text: 'Slå forsigtigt de 3 æg ud i en stor skål. Pisk dem godt igennem med et piskeris, til æggene skummer rødt og gult!',
         mathHint: '💡 Tæl æggene når du slår dem ud: 1... 2... 3 æg!',
-        mediaType: 'image',
-        mediaSrc: 'assets/ingrediens_pancake_eggs.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Child_hands_cracking_eggs_bowl_202607242301.mp4',
         icon: '🥚'
       },
       {
@@ -169,17 +169,17 @@ const recipeData = {
         title: 'Tilsæt mælk, sukker og salt 🥛',
         text: 'Mål 4 dl mælk op i målebægeret. Hæld mælken i skålen sammen med 1 spiseskefuld sukker og en lille knivspids salt.',
         mathHint: '💡 Mål 4 deciliter mælk op i målebægeret.',
-        mediaType: 'image',
-        mediaSrc: 'assets/ingrediens_pancake_milk.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Hands_pouring_milk_flour_bowl_202607242301.mp4',
         icon: '🥛'
       },
       {
         num: 4,
         title: 'Pisk melet i lidt ad gangen 🌾',
-        text: 'Mål 2 kopper mel op. Hæld melet i skålen lidt ad gangen, mens du piskerrr flittigt, til alle klumper forsvinder og dejen er helt glat!',
+        text: 'Mål 2 kopper mel op. Hæld melet i skålen lidt ad gangen, mens du pisker flittigt, til alle klumper forsvinder og dejen er helt glat!',
         mathHint: '💡 Tæl 2 kopper mel.',
-        mediaType: 'image',
-        mediaSrc: 'assets/ingrediens_flour_salt_oil.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Hands_pouring_milk_flour_bowl_202607242301.mp4',
         icon: '🌾'
       },
       {
@@ -189,8 +189,8 @@ const recipeData = {
         hasTimer: true,
         timerMinutes: 10,
         mathHint: '💡 10 minutters hvile gør dejen jævn og lækker!',
-        mediaType: 'image',
-        mediaSrc: 'assets/hero_pancake.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Pancake_batter_resting_in_bowl_202607242303.mp4',
         icon: '⏳'
       },
       {
@@ -199,7 +199,7 @@ const recipeData = {
         text: 'Komfuret og panden bliver MEGET varme. Spørg en voksen om at tænde komfuret på medium varme og smelte 1 tsk smør på panden.',
         mathHint: '⚠️ Husk: Kun voksne styrer det varme komfur!',
         mediaType: 'image',
-        mediaSrc: 'assets/ingrediens_pancake_butter.jpg',
+        mediaSrc: 'assets/Butter_on_ceramic_plate_2K_202607242300.jpeg',
         icon: '🔥'
       },
       {
@@ -207,8 +207,8 @@ const recipeData = {
         title: 'Hæld 1 øse dej på panden 🥄',
         text: 'Tag en stor suppeøse. Hæld 1 fuld øse pandekagedej midt på den varme pande og drej panden lidt, så dejen bliver en stor fin cirkel.',
         mathHint: '💡 1 suppeøse giver 1 flot rund pandekage!',
-        mediaType: 'image',
-        mediaSrc: 'assets/hero_pancake.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Batter_sizzling_in_frying_pan_202607242301.mp4',
         icon: '🍳'
       },
       {
@@ -216,8 +216,8 @@ const recipeData = {
         title: 'Vend pandekagen! 🔄',
         text: 'Når pandekagen danner små bobler ovenpå og kanten bliver fin og gylden, skubber I forsigtigt en paletkniv ind under og vender den!',
         mathHint: '💡 Steg 1 minut på hver side!',
-        mediaType: 'image',
-        mediaSrc: 'assets/hero_pancake.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Batter_sizzling_in_frying_pan_202607242301.mp4',
         icon: '🔄'
       },
       {
@@ -225,8 +225,8 @@ const recipeData = {
         title: 'Smør syltetøj & nyd! 🎉',
         text: 'Læg den varme gyldne pandekage på en tallerken. Smør et lækkert lag jordbærsyltetøj ud på pandekagen og rul den sammen til et pølserør!',
         mathHint: '💡 Rul pandekagen stramt fra kanten og ind!',
-        mediaType: 'image',
-        mediaSrc: 'assets/ingrediens_pancake_jam.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Hands_spreading_jam_pancake_1080p_202607242303.mp4',
         icon: '🌟',
         isFinal: true
       }
