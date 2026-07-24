@@ -9,12 +9,12 @@ const state = {
   currentRecipe: 'pizza',
   currentStepIndex: 0,
   timerInterval: null,
-  timerSeconds: 1800, // 30 min default til hævning
+  timerSeconds: 1800, // 30 min default
   timerRunning: false,
   checklist: {}
 };
 
-// RECIPE DATA STRUCTURE WITH DEDICATED GOOGLE FLOW / PIXAR ASSETS FOR EVERY INGREDIENT
+// RECIPE DATA STRUCTURE WITH DEDICATED GOOGLE FLOW / PIXAR ASSETS
 const recipeData = {
   pizza: {
     id: 'pizza',
@@ -133,6 +133,104 @@ const recipeData = {
         isFinal: true
       }
     ]
+  },
+  pancakes: {
+    id: 'pancakes',
+    title: 'Noras Lækre Pandekager 🥞',
+    subtitle: 'Pisk dejen skummende, lad den hvile og steg gyldne pandekager!',
+    ingredients: [
+      { id: 'eggs', name: '3 Økologiske Æg', img: 'assets/ingrediens_pancake_eggs.jpg' },
+      { id: 'milk', name: '4 dl Frisk Mælk', img: 'assets/ingrediens_pancake_milk.jpg' },
+      { id: 'flour_sugar', name: '2 kopper Mel, 1 spsk Sukker & 1 knivspids Salt', img: 'assets/ingrediens_flour_salt_oil.jpg' },
+      { id: 'butter', name: '2 spsk Smør til stegning', img: 'assets/ingrediens_pancake_butter.jpg' },
+      { id: 'jam', name: 'Jordbærsyltetøj eller Sukker', img: 'assets/ingrediens_pancake_jam.jpg' }
+    ],
+    steps: [
+      {
+        num: 1,
+        title: 'Vask hænderne godt! 🧼',
+        text: 'Før vi piskerr dejen, skal vi vaske hænder grundigt med varmt vand og sæbe. Tæl til 20 mens du vasker!',
+        mathHint: '💡 Tæl: 1, 2, 3... helt til 20!',
+        mediaType: 'video',
+        mediaSrc: 'assets/Child_hands_washing_with_soap_202607221138.mp4',
+        icon: '🧼'
+      },
+      {
+        num: 2,
+        title: 'Slå 3 æg ud i skålen 🥚',
+        text: 'Slå forsigtigt de 3 æg ud i en stor skål. Pisk dem godt igennem med et piskeris, til æggene skummer rødt og gult!',
+        mathHint: '💡 Tæl æggene når du slår dem ud: 1... 2... 3 æg!',
+        mediaType: 'image',
+        mediaSrc: 'assets/ingrediens_pancake_eggs.jpg',
+        icon: '🥚'
+      },
+      {
+        num: 3,
+        title: 'Tilsæt mælk, sukker og salt 🥛',
+        text: 'Mål 4 dl mælk op i målebægeret. Hæld mælken i skålen sammen med 1 spiseskefuld sukker og en lille knivspids salt.',
+        mathHint: '💡 Mål 4 deciliter mælk op i målebægeret.',
+        mediaType: 'image',
+        mediaSrc: 'assets/ingrediens_pancake_milk.jpg',
+        icon: '🥛'
+      },
+      {
+        num: 4,
+        title: 'Pisk melet i lidt ad gangen 🌾',
+        text: 'Mål 2 kopper mel op. Hæld melet i skålen lidt ad gangen, mens du piskerrr flittigt, til alle klumper forsvinder og dejen er helt glat!',
+        mathHint: '💡 Tæl 2 kopper mel.',
+        mediaType: 'image',
+        mediaSrc: 'assets/ingrediens_flour_salt_oil.jpg',
+        icon: '🌾'
+      },
+      {
+        num: 5,
+        title: 'Hviletid for dejen! (10 min) ⏳',
+        text: 'Stil skålen med pandekagedej på bordet i 10 minutter. Så når melet at opsuge mælken, så pandekagerne bliver super bløde!',
+        hasTimer: true,
+        timerMinutes: 10,
+        mathHint: '💡 10 minutters hvile gør dejen jævn og lækker!',
+        mediaType: 'image',
+        mediaSrc: 'assets/hero_pancake.jpg',
+        icon: '⏳'
+      },
+      {
+        num: 6,
+        title: 'Spørg en voksen om komfuret! 👨‍👩‍👧🔥',
+        text: 'Komfuret og panden bliver MEGET varme. Spørg en voksen om at tænde komfuret på medium varme og smelte 1 tsk smør på panden.',
+        mathHint: '⚠️ Husk: Kun voksne styrer det varme komfur!',
+        mediaType: 'image',
+        mediaSrc: 'assets/ingrediens_pancake_butter.jpg',
+        icon: '🔥'
+      },
+      {
+        num: 7,
+        title: 'Hæld 1 øse dej på panden 🥄',
+        text: 'Tag en stor suppeøse. Hæld 1 fuld øse pandekagedej midt på den varme pande og drej panden lidt, så dejen bliver en stor fin cirkel.',
+        mathHint: '💡 1 suppeøse giver 1 flot rund pandekage!',
+        mediaType: 'image',
+        mediaSrc: 'assets/hero_pancake.jpg',
+        icon: '🍳'
+      },
+      {
+        num: 8,
+        title: 'Vend pandekagen! 🔄',
+        text: 'Når pandekagen danner små bobler ovenpå og kanten bliver fin og gylden, skubber I forsigtigt en paletkniv ind under og vender den!',
+        mathHint: '💡 Steg 1 minut på hver side!',
+        mediaType: 'image',
+        mediaSrc: 'assets/hero_pancake.jpg',
+        icon: '🔄'
+      },
+      {
+        num: 9,
+        title: 'Smør syltetøj & nyd! 🎉',
+        text: 'Læg den varme gyldne pandekage på en tallerken. Smør et lækkert lag jordbærsyltetøj ud på pandekagen og rul den sammen til et pølserør!',
+        mathHint: '💡 Rul pandekagen stramt fra kanten og ind!',
+        mediaType: 'image',
+        mediaSrc: 'assets/ingrediens_pancake_jam.jpg',
+        icon: '🌟',
+        isFinal: true
+      }
+    ]
   }
 };
 
@@ -202,8 +300,8 @@ const sounds = new SoundFX();
 
 // VIDEO PRELOADER FOR INSTANT PLAYBACK PERFORMANCE
 function preloadRecipeVideos() {
-  const pizzaSteps = recipeData.pizza.steps;
-  pizzaSteps.forEach(step => {
+  const steps = [...recipeData.pizza.steps, ...recipeData.pancakes.steps];
+  steps.forEach(step => {
     if (step.mediaType === 'video' && step.mediaSrc) {
       const videoPreloader = document.createElement('video');
       videoPreloader.preload = 'auto';
@@ -219,7 +317,6 @@ function preloadRecipeVideos() {
 document.addEventListener('DOMContentLoaded', () => {
   updateStarDisplay();
   renderHome();
-  // Preload videos in background after initial render
   setTimeout(preloadRecipeVideos, 1000);
 });
 
@@ -241,12 +338,14 @@ function goHome() {
 }
 
 function renderHome() {
+  const isPancakesUnlocked = state.stars >= 3;
+
   const main = document.getElementById('mainView');
   main.innerHTML = `
     <div class="hero-banner">
       <div class="hero-text">
         <h2>Hej Nora! 👋</h2>
-        <p>Er du klar til at lave ægte pizzadej fra bunden i dag?</p>
+        <p>Er du klar til at lave lækker mad fra bunden i dag?</p>
         <button class="hero-btn" onclick="openIngredients('pizza')">Start Pizza-eventyr 🍕</button>
       </div>
       <img src="assets/hero_pizza.jpg" alt="Glad pizza" class="custom-hero-img">
@@ -270,20 +369,36 @@ function renderHome() {
         <button class="start-recipe-btn">Start Nu ✨</button>
       </div>
 
-      <!-- PANCAKES (Locked preview) -->
-      <div class="recipe-card locked-card" onclick="soundLocked()">
-        <span class="lock-badge">🔒 Låses op snart</span>
-        <div class="recipe-img-box" style="display:flex; align-items:center; justify-content:center; background:#FFF5F5; font-size:3.5rem;">🥞</div>
-        <div class="recipe-title">Lækre Pandekager</div>
-        <div class="recipe-tags">
-          <span class="tag">⏱️ 15 min</span>
-          <span class="tag">⭐ Kræver 5 stjerner</span>
+      <!-- PANCAKES (Unlocked if >= 3 stars) -->
+      ${isPancakesUnlocked ? `
+        <div class="recipe-card active-card" onclick="openIngredients('pancakes')">
+          <div class="recipe-img-box">
+            <img src="assets/hero_pancake.jpg" alt="Pandekager" class="custom-card-img">
+          </div>
+          <div class="recipe-title">Lækre Pandekager</div>
+          <div class="recipe-tags">
+            <span class="tag">⏱️ 20 min</span>
+            <span class="tag">⭐ Låst Op!</span>
+          </div>
+          <button class="start-recipe-btn" style="background: var(--primary-pink); box-shadow: 0 4px 0px #C53030;">Start Nu 🥞</button>
         </div>
-      </div>
+      ` : `
+        <div class="recipe-card locked-card" onclick="soundLocked()">
+          <span class="lock-badge">🔒 Låses op ved 3 ⭐</span>
+          <div class="recipe-img-box">
+            <img src="assets/hero_pancake.jpg" alt="Pandekager" class="custom-card-img" style="filter: grayscale(60%);">
+          </div>
+          <div class="recipe-title">Lækre Pandekager</div>
+          <div class="recipe-tags">
+            <span class="tag">⏱️ 20 min</span>
+            <span class="tag">⭐ Kræver 3 stjerner</span>
+          </div>
+        </div>
+      `}
 
       <!-- SMOOTHIE (Locked preview) -->
-      <div class="recipe-card locked-card" onclick="soundLocked()">
-        <span class="lock-badge">🔒 Låses op snart</span>
+      <div class="recipe-card locked-card" onclick="soundLocked('Smoothie kræver 10 stjerner!')">
+        <span class="lock-badge">🔒 Låses op ved 10 ⭐</span>
         <div class="recipe-img-box" style="display:flex; align-items:center; justify-content:center; background:#FFF5F5; font-size:3.5rem;">🍓</div>
         <div class="recipe-title">Frugt Smoothie</div>
         <div class="recipe-tags">
@@ -295,12 +410,12 @@ function renderHome() {
   `;
 }
 
-function soundLocked() {
+function soundLocked(msg = '🔒 Lav Pizzaen først for at opnå stjerner og låse op!') {
   sounds.playClick();
-  alert('🔒 Du skal lave Pizzaen først for at låse op for flere opskrifter!');
+  alert(msg);
 }
 
-// INGREDIENTS CHECKLIST VIEW WITH DEDICATED LARGE IMAGES
+// INGREDIENTS CHECKLIST VIEW
 function openIngredients(recipeId) {
   sounds.playClick();
   state.currentRecipe = recipeId;
@@ -326,7 +441,7 @@ function openIngredients(recipeId) {
 
       <div class="step-nav-bar">
         <button class="big-btn prev" onclick="goHome()">⬅️ Tilbage</button>
-        <button class="big-btn next" onclick="openPizzaRecipe()">Klar! Lav dej ➡️</button>
+        <button class="big-btn next" onclick="openRecipeStep('${recipeId}', 0)">Klar! Start ➡️</button>
       </div>
     </div>
   `;
@@ -339,16 +454,15 @@ function toggleCheck(ingId) {
 }
 
 // COOKING STEP VIEW
-function openPizzaRecipe(stepIdx = 0) {
+function openRecipeStep(recipeId = 'pizza', stepIdx = 0) {
   sounds.playClick();
-  state.currentRecipe = 'pizza';
+  state.currentRecipe = recipeId;
   state.currentStepIndex = stepIdx;
   state.currentView = 'cooking';
 
-  const recipe = recipeData.pizza;
+  const recipe = recipeData[recipeId];
   const step = recipe.steps[stepIdx];
 
-  // Set default timer duration depending on step
   if (step.hasTimer) {
     state.timerSeconds = (step.timerMinutes || 10) * 60;
   }
@@ -358,7 +472,7 @@ function openPizzaRecipe(stepIdx = 0) {
     <!-- STEP PROGRESS INDICATOR -->
     <div class="step-header">
       <div style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--primary-pink)">
-        Trin ${step.num} af ${recipe.steps.length}
+        ${recipe.title} - Trin ${step.num} af ${recipe.steps.length}
       </div>
       <div class="step-indicator">
         ${recipe.steps.map((s, idx) => `
@@ -395,7 +509,7 @@ function openPizzaRecipe(stepIdx = 0) {
             ` : ''}
           </div>
 
-          <!-- IN-APP TIMER (For dough rising & oven steps) -->
+          <!-- IN-APP TIMER -->
           ${step.hasTimer ? `
             <div class="timer-container">
               <div style="font-family: var(--font-heading); color: #718096;">Nedtællings-Timer ⏱️</div>
@@ -413,26 +527,30 @@ function openPizzaRecipe(stepIdx = 0) {
       <!-- BOTTOM NAVIGATION BUTTONS FOR STEP -->
       <div class="step-nav-bar">
         ${stepIdx > 0 ? `
-          <button class="big-btn prev" onclick="openPizzaRecipe(${stepIdx - 1})">⬅️ Forrige</button>
+          <button class="big-btn prev" onclick="openRecipeStep('${recipeId}', ${stepIdx - 1})">⬅️ Forrige</button>
         ` : `
-          <button class="big-btn prev" onclick="openIngredients('pizza')">⬅️ Tjekliste</button>
+          <button class="big-btn prev" onclick="openIngredients('${recipeId}')">⬅️ Tjekliste</button>
         `}
 
         ${step.isFinal ? `
-          <button class="big-btn finish" onclick="finishRecipe()">Færdig! Få 3 Stjerner ⭐⭐⭐</button>
+          <button class="big-btn finish" onclick="finishRecipe('${recipeId}')">Færdig! Få 3 Stjerner ⭐⭐⭐</button>
         ` : `
-          <button class="big-btn next" onclick="openPizzaRecipe(${stepIdx + 1})">Næste Trin ➡️</button>
+          <button class="big-btn next" onclick="openRecipeStep('${recipeId}', ${stepIdx + 1})">Næste Trin ➡️</button>
         `}
       </div>
 
     </div>
   `;
 
-  // Explicitly trigger play() on video element to guarantee zero-delay start on iPad/Safari
   const activeVideo = main.querySelector('video');
   if (activeVideo) {
     activeVideo.play().catch(() => {});
   }
+}
+
+// Backward compatibility helper
+function openPizzaRecipe(stepIdx = 0) {
+  openRecipeStep('pizza', stepIdx);
 }
 
 // TIMER LOGIC
@@ -473,28 +591,31 @@ function updateTimerDisplay() {
 }
 
 // FINISH RECIPE CELEBRATION
-function finishRecipe() {
+function finishRecipe(recipeId = 'pizza') {
   sounds.playFanfare();
   addStars(3);
 
-  // Trigger confetti
   if (window.confetti) {
     confetti({
-      particleCount: 120,
-      spread: 80,
+      particleCount: 140,
+      spread: 90,
       origin: { y: 0.6 }
     });
   }
 
+  const recipe = recipeData[recipeId];
+  const trophyImg = recipeId === 'pancakes' ? 'assets/pancake_trophy.jpg' : 'assets/pizza_trophy.jpg';
+  const title = recipeId === 'pancakes' ? 'PANDEKAGE-MESTER!' : 'PIZZA-MESTER!';
+
   const main = document.getElementById('mainView');
   main.innerHTML = `
     <div style="text-align: center; padding: 40px 20px; background: white; border-radius: 24px; border: 4px solid var(--primary-yellow);">
-      <img src="assets/pizza_trophy.jpg" alt="Pizza Trofæ" style="width:160px; height:160px; object-fit:cover; border-radius:24px; box-shadow:0 8px 24px rgba(0,0,0,0.15); animation: floatPizza 2s infinite ease-in-out;">
+      <img src="${trophyImg}" alt="Trofæ" style="width:160px; height:160px; object-fit:cover; border-radius:24px; box-shadow:0 8px 24px rgba(0,0,0,0.15); animation: floatPizza 2s infinite ease-in-out;">
       <h1 style="font-family: var(--font-heading); font-size: 2.5rem; color: var(--primary-pink); margin: 16px 0;">
         SEJT GÅET, NORA! 🎉
       </h1>
       <p style="font-size: 1.4rem; font-weight: bold; color: var(--text-dark); margin-bottom: 24px;">
-        Du har lavet en hel pizza helt fra bunden af! Du har optjent 3 nye stjerner! ⭐⭐⭐
+        Du er nu en ægte ${title} Du har optjent 3 nye stjerner! ⭐⭐⭐
       </p>
 
       <div style="display: flex; gap: 16px; justify-content: center;">
@@ -509,6 +630,8 @@ function finishRecipe() {
 function openBadges() {
   sounds.playClick();
   state.currentView = 'badges';
+  const isPancakesCompleted = state.stars >= 6;
+
   const main = document.getElementById('mainView');
   main.innerHTML = `
     <div class="checklist-container">
@@ -519,19 +642,19 @@ function openBadges() {
         <div class="badge-card">
           <img src="assets/pizza_trophy.jpg" alt="Pizza Trofæ" class="custom-trophy-img">
           <div class="badge-title">Dej-Mester & Pizza-Mester</div>
-          <span class="tag" style="background:#E6FFFA; color:#049A73;">Opnået!</span>
+          <span class="tag" style="background:#E6FFFA; color:#049A73;">Opnået! ⭐</span>
         </div>
 
         <div class="badge-card">
           <img src="assets/chef_mascot.jpg" alt="Kokke Mærke" class="custom-trophy-img">
           <div class="badge-title">Ren Vaskebjørn</div>
-          <span class="tag" style="background:#E6FFFA; color:#049A73;">Opnået!</span>
+          <span class="tag" style="background:#E6FFFA; color:#049A73;">Opnået! 🧼</span>
         </div>
 
-        <div class="badge-card" style="opacity: 0.5;">
-          <div class="badge-icon">🥞</div>
-          <div class="badge-title">Pandekage-Konge</div>
-          <span class="tag">Låst</span>
+        <div class="badge-card" style="${isPancakesCompleted ? '' : 'opacity: 0.65;'}">
+          <img src="assets/pancake_trophy.jpg" alt="Pandekage Trofæ" class="custom-trophy-img" style="${isPancakesCompleted ? '' : 'filter: grayscale(50%);'}">
+          <div class="badge-title">Pandekage-Konge 🥞</div>
+          ${isPancakesCompleted ? `<span class="tag" style="background:#E6FFFA; color:#049A73;">Opnået! ⭐</span>` : `<span class="tag">Lav Pandekager</span>`}
         </div>
       </div>
 
