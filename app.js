@@ -231,6 +231,96 @@ const recipeData = {
         isFinal: true
       }
     ]
+  },
+  chocolate_cake: {
+    id: 'chocolate_cake',
+    title: 'Noras Lækre Chokoladekage 🍫',
+    subtitle: 'Rør en luftig chokoladedej, bag i ovnen og pynt med glade farver!',
+    ingredients: [
+      { id: 'butter', name: '100g Blødt Smør', img: 'assets/Butter_on_ceramic_plate_2K_202607242300.jpeg' },
+      { id: 'sugar', name: '2 kopper Sukker', img: 'assets/ingrediens_flour_salt_oil.jpg' },
+      { id: 'eggs', name: '2 Økologiske Æg', img: 'assets/3_brown_eggs_carton_2K_202607242300.jpeg' },
+      { id: 'milk', name: '2 dl Frisk Mælk', img: 'assets/Glass_milk_pitcher_filled_milk_202607242300.jpeg' },
+      { id: 'flour_cocoa', name: '3 kopper Mel, 4 spsk Kakao & 2 tsk Bagepulver', img: 'assets/ingrediens_flour_salt_oil.jpg' },
+      { id: 'sprinkles', name: 'Chokoladeglasur & Kulørt Krymmel', img: 'assets/hero_chocolate_cake.jpg' }
+    ],
+    steps: [
+      {
+        num: 1,
+        title: 'Vask hænderne godt! 🧼',
+        text: 'Før vi rører kagedejen sammen, skal vi vaske hænder med varmt vand og sæbe. Tæl til 20 mens du vasker!',
+        mathHint: '💡 Tæl: 1, 2, 3... helt til 20!',
+        mediaType: 'video',
+        mediaSrc: 'assets/Child_hands_washing_with_soap_202607221138.mp4',
+        icon: '🧼'
+      },
+      {
+        num: 2,
+        title: 'Tænd ovnen & smør formen 🥣🔥',
+        text: 'Spørg en voksen om at tænde ovnen på 180°C varmluft. Smør derefter en rund kageform med en lille smule blødt smør.',
+        mathHint: '⚠️ Husk: En voksen tænder ovnen på 180°C!',
+        mediaType: 'image',
+        mediaSrc: 'assets/Butter_on_ceramic_plate_2K_202607242300.jpeg',
+        icon: '🔥'
+      },
+      {
+        num: 3,
+        title: 'Pisk smør og sukker luftigt 🧈',
+        text: 'Hæld 100g blødt smør og 2 kopper sukker i skålen. Pisk det godt sammen med elpiskere eller piskeris, til det bliver helt blødt og lyst!',
+        mathHint: '💡 Tæl 2 kopper sukker op i skålen.',
+        mediaType: 'image',
+        mediaSrc: 'assets/ingrediens_flour_salt_oil.jpg',
+        icon: '🧈'
+      },
+      {
+        num: 4,
+        title: 'Tilsæt æg og mælk 🥛🥚',
+        text: 'Slå de 2 æg ud i skålen ét ad gangen. Hæld derefter 2 dl frisk mælk i og pisk dejen godt igennem.',
+        mathHint: '💡 Tæl æggene: 1... 2 æg!',
+        mediaType: 'image',
+        mediaSrc: 'assets/3_brown_eggs_carton_2K_202607242300.jpeg',
+        icon: '🥛'
+      },
+      {
+        num: 5,
+        title: 'Sigt kakao, mel og bagepulver i 🌾🍫',
+        text: 'Hæld 3 kopper mel, 4 spiseskefulde mørkt kakaopulver og 2 teskefulde bagepulver i skålen. Rør det hele sammen til dejen bliver helt mørkebrun og lækker!',
+        mathHint: '💡 Tæl 4 store skefulde kakaopulver!',
+        mediaType: 'image',
+        mediaSrc: 'assets/hero_chocolate_cake.jpg',
+        icon: '🍫'
+      },
+      {
+        num: 6,
+        title: 'Hæld dejen i kageformen 🥧',
+        text: 'Hæld den lækre mørke chokoladedej over i kageformen. Brug en dejskraber til at få det sidste dej ud af skålen!',
+        mathHint: '💡 Glat overfladen ud så kagen bliver helt lige.',
+        mediaType: 'image',
+        mediaSrc: 'assets/hero_chocolate_cake.jpg',
+        icon: '🥧'
+      },
+      {
+        num: 7,
+        title: 'Bag kagen i ovnen! (25 min) ⏱️🔥',
+        text: 'Spørg en voksen om at sætte kagen midt i den varme ovn. Sæt timeren på 25 minutter og se kagen hæve op!',
+        hasTimer: true,
+        timerMinutes: 25,
+        mathHint: '💡 25 minutters bagetid gør kagen dejlig svampet!',
+        mediaType: 'image',
+        mediaSrc: 'assets/hero_chocolate_cake.jpg',
+        icon: '🔥'
+      },
+      {
+        num: 8,
+        title: 'Pynt med glasur & krymmel! 🎉',
+        text: 'Når kagen er afkølet, smører I et lækkert lag chokoladeglasur på toppen og drysser kulørt festkrymmel ud over! Velbekomme!',
+        mathHint: '💡 Drys festkrymmel over hele kagen!',
+        mediaType: 'image',
+        mediaSrc: 'assets/hero_chocolate_cake.jpg',
+        icon: '🌟',
+        isFinal: true
+      }
+    ]
   }
 };
 
@@ -310,7 +400,6 @@ class VoiceoverManager {
     if (!this.synth) return;
     const findVoice = () => {
       const voices = this.synth.getVoices();
-      // Prioritize natural Danish voices on iOS/macOS/Android/Chrome (e.g. Sara, Magnus, Google dansk, da-DK)
       this.danishVoice = voices.find(v => v.lang.includes('da-DK') || v.lang.includes('da_DK') || v.lang.startsWith('da')) || null;
     };
 
@@ -349,8 +438,8 @@ class VoiceoverManager {
       utterance.voice = this.danishVoice;
     }
     utterance.lang = 'da-DK';
-    utterance.rate = 0.92; // Slightly slower, warm pace for 7-year-old Nora
-    utterance.pitch = 1.08; // Friendly, cheerful pitch
+    utterance.rate = 0.92;
+    utterance.pitch = 1.08;
 
     const btn = document.getElementById('speechBtn');
     
@@ -380,7 +469,7 @@ const voiceover = new VoiceoverManager();
 
 // VIDEO PRELOADER FOR INSTANT PLAYBACK PERFORMANCE
 function preloadRecipeVideos() {
-  const steps = [...recipeData.pizza.steps, ...recipeData.pancakes.steps];
+  const steps = [...recipeData.pizza.steps, ...recipeData.pancakes.steps, ...recipeData.chocolate_cake.steps];
   steps.forEach(step => {
     if (step.mediaType === 'video' && step.mediaSrc) {
       const videoPreloader = document.createElement('video');
@@ -420,6 +509,7 @@ function goHome() {
 
 function renderHome() {
   const isPancakesUnlocked = state.stars >= 3;
+  const isCakeUnlocked = state.stars >= 6;
 
   const main = document.getElementById('mainView');
   main.innerHTML = `
@@ -477,18 +567,32 @@ function renderHome() {
         </div>
       `}
 
-      <!-- CHOKOLADEKAGE (Locked preview) -->
-      <div class="recipe-card locked-card" onclick="soundLocked('Chokoladekage kræver 10 stjerner! ⭐')">
-        <span class="lock-badge">🔒 Låses op ved 10 ⭐</span>
-        <div class="recipe-img-box">
-          <img src="assets/hero_chocolate_cake.jpg" alt="Chokoladekage" class="custom-card-img" style="filter: grayscale(40%);">
+      <!-- CHOKOLADEKAGE (Unlocked if >= 6 stars) -->
+      ${isCakeUnlocked ? `
+        <div class="recipe-card active-card" onclick="openIngredients('chocolate_cake')">
+          <div class="recipe-img-box">
+            <img src="assets/hero_chocolate_cake.jpg" alt="Chokoladekage" class="custom-card-img">
+          </div>
+          <div class="recipe-title">Lækker Chokoladekage</div>
+          <div class="recipe-tags">
+            <span class="tag">⏱️ 30 min</span>
+            <span class="tag">⭐ Låst Op!</span>
+          </div>
+          <button class="start-recipe-btn" style="background: var(--primary-purple); box-shadow: 0 4px 0px #5E17EB;">Start Nu 🍫</button>
         </div>
-        <div class="recipe-title">Lækker Chokoladekage</div>
-        <div class="recipe-tags">
-          <span class="tag">⏱️ 30 min</span>
-          <span class="tag">⭐ Kræver 10 stjerner</span>
+      ` : `
+        <div class="recipe-card locked-card" onclick="soundLocked('Chokoladekage kræver 6 stjerner! ⭐')">
+          <span class="lock-badge">🔒 Låses op ved 6 ⭐</span>
+          <div class="recipe-img-box">
+            <img src="assets/hero_chocolate_cake.jpg" alt="Chokoladekage" class="custom-card-img" style="filter: grayscale(40%);">
+          </div>
+          <div class="recipe-title">Lækker Chokoladekage</div>
+          <div class="recipe-tags">
+            <span class="tag">⏱️ 30 min</span>
+            <span class="tag">⭐ Kræver 6 stjerner</span>
+          </div>
         </div>
-      </div>
+      `}
     </div>
   `;
 }
@@ -552,7 +656,6 @@ function openRecipeStep(recipeId = 'pizza', stepIdx = 0) {
     state.timerSeconds = (step.timerMinutes || 10) * 60;
   }
 
-  // Construct full text to read out loud
   const fullTextToRead = `${step.title}. ${step.text} ${step.mathHint ? step.mathHint.replace(/[\u{1F300}-\u{1F9FF}]/gu, '') : ''}`;
 
   const main = document.getElementById('mainView');
@@ -699,8 +802,16 @@ function finishRecipe(recipeId = 'pizza') {
   }
 
   const recipe = recipeData[recipeId];
-  const trophyImg = recipeId === 'pancakes' ? 'assets/pancake_trophy.jpg' : 'assets/pizza_trophy.jpg';
-  const title = recipeId === 'pancakes' ? 'PANDEKAGE-MESTER!' : 'PIZZA-MESTER!';
+  let trophyImg = 'assets/pizza_trophy.jpg';
+  let title = 'PIZZA-MESTER!';
+
+  if (recipeId === 'pancakes') {
+    trophyImg = 'assets/pancake_trophy.jpg';
+    title = 'PANDEKAGE-MESTER!';
+  } else if (recipeId === 'chocolate_cake') {
+    trophyImg = 'assets/hero_chocolate_cake.jpg';
+    title = 'KAGE-MESTER!';
+  }
 
   const main = document.getElementById('mainView');
   main.innerHTML = `
@@ -727,6 +838,7 @@ function openBadges() {
   sounds.playClick();
   state.currentView = 'badges';
   const isPancakesCompleted = state.stars >= 6;
+  const isCakeCompleted = state.stars >= 9;
 
   const main = document.getElementById('mainView');
   main.innerHTML = `
@@ -751,6 +863,12 @@ function openBadges() {
           <img src="assets/pancake_trophy.jpg" alt="Pandekage Trofæ" class="custom-trophy-img" style="${isPancakesCompleted ? '' : 'filter: grayscale(50%);'}">
           <div class="badge-title">Pandekage-Konge 🥞</div>
           ${isPancakesCompleted ? `<span class="tag" style="background:#E6FFFA; color:#049A73;">Opnået! ⭐</span>` : `<span class="tag">Lav Pandekager</span>`}
+        </div>
+
+        <div class="badge-card" style="${isCakeCompleted ? '' : 'opacity: 0.65;'}">
+          <img src="assets/hero_chocolate_cake.jpg" alt="Chokoladekage Trofæ" class="custom-trophy-img" style="${isCakeCompleted ? '' : 'filter: grayscale(50%);'}">
+          <div class="badge-title">Kage-Mester 🍫</div>
+          ${isCakeCompleted ? `<span class="tag" style="background:#E6FFFA; color:#049A73;">Opnået! ⭐</span>` : `<span class="tag">Bage Chokoladekage</span>`}
         </div>
       </div>
 
