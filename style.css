@@ -345,13 +345,16 @@ body {
 
 .lock-badge {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  background: #CBD5E0;
-  padding: 6px 12px;
+  top: 8px;
+  right: 8px;
+  background: rgba(203, 213, 224, 0.95);
+  color: #2D3748;
+  padding: 4px 10px;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.78rem;
   font-weight: bold;
+  z-index: 5;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 /* STEP BY STEP COOKING VIEW */
