@@ -498,17 +498,37 @@ class VoiceoverManager {
 
 const voiceover = new VoiceoverManager();
 
-// VIDEO PRELOADER FOR INSTANT PLAYBACK PERFORMANCE
+// HIGH-PERFORMANCE MEDIA PRELOADER & IMAGE CACHE
 function preloadRecipeVideos() {
-  const steps = [...recipeData.pizza.steps, ...recipeData.pancakes.steps, ...recipeData.chocolate_cake.steps];
-  steps.forEach(step => {
-    if (step.mediaType === 'video' && step.mediaSrc) {
-      const videoPreloader = document.createElement('video');
-      videoPreloader.preload = 'auto';
-      videoPreloader.src = step.mediaSrc;
-      videoPreloader.muted = true;
-      videoPreloader.style.display = 'none';
-      document.body.appendChild(videoPreloader);
+  const mediaPaths = new Set();
+  
+  // Collect all unique video and image paths
+  Object.values(recipeData).forEach(recipe => {
+    recipe.ingredients.forEach(ing => mediaPaths.add(ing.img));
+    recipe.steps.forEach(step => {
+      if (step.mediaSrc) mediaPaths.add(step.mediaSrc);
+    });
+  });
+
+  // Preload in low-priority background thread
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => executePreload(mediaPaths));
+  } else {
+    setTimeout(() => executePreload(mediaPaths), 500);
+  }
+}
+
+function executePreload(paths) {
+  paths.forEach(src => {
+    if (src.endsWith('.mp4')) {
+      const v = document.createElement('video');
+      v.preload = 'auto';
+      v.src = src;
+      v.muted = true;
+    } else {
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = src;
     }
   });
 }
@@ -517,7 +537,7 @@ function preloadRecipeVideos() {
 document.addEventListener('DOMContentLoaded', () => {
   updateStarDisplay();
   renderHome();
-  setTimeout(preloadRecipeVideos, 1000);
+  preloadRecipeVideos();
 });
 
 function updateStarDisplay() {
@@ -550,7 +570,7 @@ function renderHome() {
         <p>Er du klar til at lave lækker mad fra bunden i dag?</p>
         <button class="hero-btn" onclick="openIngredients('pizza')">Start Pizza-eventyr 🍕</button>
       </div>
-      <img src="assets/hero_pizza.jpg" alt="Glad pizza" class="custom-hero-img">
+      <img src="assets/hero_pizza.jpg" alt="Glad pizza" class="custom-hero-img" decoding="async" fetchpriority="high" width="220" height="220">
     </div>
 
     <div class="section-title">
@@ -561,7 +581,7 @@ function renderHome() {
       <!-- PIZZA (Unlocked) -->
       <div class="recipe-card active-card" onclick="openIngredients('pizza')">
         <div class="recipe-img-box">
-          <img src="assets/hero_pizza.jpg" alt="Pizza" class="custom-card-img">
+          <img src="assets/hero_pizza.jpg" alt="Pizza" class="custom-card-img" decoding="async" loading="eager" width="300" height="180">
         </div>
         <div class="recipe-title">Sprød Pizza fra Bunden</div>
         <div class="recipe-tags">
@@ -575,7 +595,7 @@ function renderHome() {
       ${isPancakesUnlocked ? `
         <div class="recipe-card active-card" onclick="openIngredients('pancakes')">
           <div class="recipe-img-box">
-            <img src="assets/hero_pancake.jpg" alt="Pandekager" class="custom-card-img">
+            <img src="assets/hero_pancake.jpg" alt="Pandekager" class="custom-card-img" decoding="async" loading="eager" width="300" height="180">
           </div>
           <div class="recipe-title">Lækre Pandekager</div>
           <div class="recipe-tags">
@@ -588,7 +608,7 @@ function renderHome() {
         <div class="recipe-card locked-card" onclick="soundLocked()">
           <span class="lock-badge">🔒 Låses op ved 3 ⭐</span>
           <div class="recipe-img-box">
-            <img src="assets/hero_pancake.jpg" alt="Pandekager" class="custom-card-img" style="filter: grayscale(60%);">
+            <img src="assets/hero_pancake.jpg" alt="Pandekager" class="custom-card-img" style="filter: grayscale(60%);" decoding="async" loading="lazy" width="300" height="180">
           </div>
           <div class="recipe-title">Lækre Pandekager</div>
           <div class="recipe-tags">
@@ -602,7 +622,7 @@ function renderHome() {
       ${isCakeUnlocked ? `
         <div class="recipe-card active-card" onclick="openIngredients('chocolate_cake')">
           <div class="recipe-img-box">
-            <img src="assets/hero_chocolate_cake.jpg" alt="Chokoladekage" class="custom-card-img">
+            <img src="assets/hero_chocolate_cake.jpg" alt="Chokoladekage" class="custom-card-img" decoding="async" loading="eager" width="300" height="180">
           </div>
           <div class="recipe-title">Lækker Chokoladekage</div>
           <div class="recipe-tags">
@@ -615,7 +635,7 @@ function renderHome() {
         <div class="recipe-card locked-card" onclick="soundLocked('Chokoladekage kræver 6 stjerner! ⭐')">
           <span class="lock-badge">🔒 Låses op ved 6 ⭐</span>
           <div class="recipe-img-box">
-            <img src="assets/hero_chocolate_cake.jpg" alt="Chokoladekage" class="custom-card-img" style="filter: grayscale(40%);">
+            <img src="assets/hero_chocolate_cake.jpg" alt="Chokoladekage" class="custom-card-img" style="filter: grayscale(40%);" decoding="async" loading="lazy" width="300" height="180">
           </div>
           <div class="recipe-title">Lækker Chokoladekage</div>
           <div class="recipe-tags">
@@ -652,7 +672,7 @@ function openIngredients(recipeId) {
         ${recipe.ingredients.map(ing => `
           <div class="check-item ${state.checklist[ing.id] ? 'checked' : ''}" onclick="toggleCheck('${ing.id}')">
             <div class="check-box">${state.checklist[ing.id] ? '✓' : ''}</div>
-            <img src="${ing.img}" alt="${ing.name}" class="check-item-img">
+            <img src="${ing.img}" alt="${ing.name}" class="check-item-img" decoding="async" loading="eager" width="90" height="90">
             <span class="check-item-text">${ing.name}</span>
           </div>
         `).join('')}

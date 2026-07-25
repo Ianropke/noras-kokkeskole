@@ -32,7 +32,23 @@
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
   user-select: none;
+}
+
+html, body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+img, video {
+  image-rendering: -webkit-optimize-contrast;
+  content-visibility: auto;
+  contain-intrinsic-size: 300px 200px;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 body {

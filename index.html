@@ -2,9 +2,20 @@
 <html lang="da">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>Noras Kokkeskole 🍕</title>
   
+  <!-- PERFORMANCE & DNS PREFETCH HINTS -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- ASSET PRELOAD HINTS (FOR INSTANT LCP RENDERING) -->
+  <link rel="preload" as="image" href="assets/chef_mascot.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/hero_pizza.jpg" fetchpriority="high">
+
   <!-- PWA & Apple iPad Web App Meta Tags -->
   <link rel="manifest" href="manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
@@ -14,9 +25,7 @@
   <link rel="apple-touch-icon" href="assets/chef_mascot.jpg">
   <meta name="theme-color" content="#FF5A5F">
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Google Fonts with Swap Display for Fast First Paint -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -26,7 +35,7 @@
     <!-- HEADER / TOPBAR -->
     <header class="top-bar">
       <div class="logo-area" onclick="goHome()">
-        <img src="assets/chef_mascot.jpg" alt="Chef Nora" class="custom-logo-img">
+        <img src="assets/chef_mascot.jpg" alt="Chef Nora" class="custom-logo-img" decoding="async" fetchpriority="high" width="56" height="56">
         <div class="logo-text">
           <h1>Noras Kokkeskole</h1>
           <span class="sub-logo">Lær at lave lækker mad fra bunden!</span>
@@ -67,8 +76,8 @@
     <!-- Populated dynamically via JS for print -->
   </div>
 
-  <!-- Audio Context Helper Scripts & Confetti JS -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Audio Context Helper Scripts & Confetti JS (Async for zero render blocking) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" async></script>
   <script src="app.js"></script>
 </body>
 </html>
