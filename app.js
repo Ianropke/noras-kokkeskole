@@ -241,8 +241,8 @@ const recipeData = {
       { id: 'sugar', name: '2 kopper Sukker', img: 'assets/ingrediens_flour_salt_oil.jpg' },
       { id: 'eggs', name: '2 Økologiske Æg', img: 'assets/3_brown_eggs_carton_2K_202607242300.jpeg' },
       { id: 'milk', name: '2 dl Frisk Mælk', img: 'assets/Glass_milk_pitcher_filled_milk_202607242300.jpeg' },
-      { id: 'flour_cocoa', name: '3 kopper Mel, 4 spsk Kakao & 2 tsk Bagepulver', img: 'assets/ingrediens_flour_salt_oil.jpg' },
-      { id: 'sprinkles', name: 'Chokoladeglasur & Kulørt Krymmel', img: 'assets/hero_chocolate_cake.jpg' }
+      { id: 'flour_cocoa', name: '3 kopper Mel, 4 spsk Kakao & 2 tsk Bagepulver', img: 'assets/Bowl_filled_with_cocoa_powder_202607250854.jpeg' },
+      { id: 'sprinkles', name: 'Chokoladeglasur & Kulørt Krymmel', img: 'assets/Bowl_of_sprinkles_and_frosting_202607250854.jpeg' }
     ],
     steps: [
       {
@@ -260,7 +260,7 @@ const recipeData = {
         text: 'Spørg en voksen om at tænde ovnen på 180°C varmluft. Smør derefter en rund kageform med en lille smule blødt smør.',
         mathHint: '⚠️ Husk: En voksen tænder ovnen på 180°C!',
         mediaType: 'image',
-        mediaSrc: 'assets/Butter_on_ceramic_plate_2K_202607242300.jpeg',
+        mediaSrc: 'assets/Cake_baking_pan_butter_2K_202607250854.jpeg',
         icon: '🔥'
       },
       {
@@ -268,8 +268,8 @@ const recipeData = {
         title: 'Pisk smør og sukker luftigt 🧈',
         text: 'Hæld 100g blødt smør og 2 kopper sukker i skålen. Pisk det godt sammen med elpiskere eller piskeris, til det bliver helt blødt og lyst!',
         mathHint: '💡 Tæl 2 kopper sukker op i skålen.',
-        mediaType: 'image',
-        mediaSrc: 'assets/ingrediens_flour_salt_oil.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Hands_whisking_butter_sugar_1080p_202607250855.mp4',
         icon: '🧈'
       },
       {
@@ -277,8 +277,8 @@ const recipeData = {
         title: 'Tilsæt æg og mælk 🥛🥚',
         text: 'Slå de 2 æg ud i skålen ét ad gangen. Hæld derefter 2 dl frisk mælk i og pisk dejen godt igennem.',
         mathHint: '💡 Tæl æggene: 1... 2 æg!',
-        mediaType: 'image',
-        mediaSrc: 'assets/3_brown_eggs_carton_2K_202607242300.jpeg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Hands_mixing_chocolate_batter_1080p_202607250855.mp4',
         icon: '🥛'
       },
       {
@@ -286,8 +286,8 @@ const recipeData = {
         title: 'Sigt kakao, mel og bagepulver i 🌾🍫',
         text: 'Hæld 3 kopper mel, 4 spiseskefulde mørkt kakaopulver og 2 teskefulde bagepulver i skålen. Rør det hele sammen til dejen bliver helt mørkebrun og lækker!',
         mathHint: '💡 Tæl 4 store skefulde kakaopulver!',
-        mediaType: 'image',
-        mediaSrc: 'assets/hero_chocolate_cake.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Hands_mixing_chocolate_batter_1080p_202607250855.mp4',
         icon: '🍫'
       },
       {
@@ -295,8 +295,8 @@ const recipeData = {
         title: 'Hæld dejen i kageformen 🥧',
         text: 'Hæld den lækre mørke chokoladedej over i kageformen. Brug en dejskraber til at få det sidste dej ud af skålen!',
         mathHint: '💡 Glat overfladen ud så kagen bliver helt lige.',
-        mediaType: 'image',
-        mediaSrc: 'assets/hero_chocolate_cake.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Chocolate_cake_batter_poured_pan_202607250854.mp4',
         icon: '🥧'
       },
       {
@@ -306,8 +306,8 @@ const recipeData = {
         hasTimer: true,
         timerMinutes: 25,
         mathHint: '💡 25 minutters bagetid gør kagen dejlig svampet!',
-        mediaType: 'image',
-        mediaSrc: 'assets/hero_chocolate_cake.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Chocolate_cake_rising_in_oven_202607250855.mp4',
         icon: '🔥'
       },
       {
@@ -315,8 +315,8 @@ const recipeData = {
         title: 'Pynt med glasur & krymmel! 🎉',
         text: 'Når kagen er afkølet, smører I et lækkert lag chokoladeglasur på toppen og drysser kulørt festkrymmel ud over! Velbekomme!',
         mathHint: '💡 Drys festkrymmel over hele kagen!',
-        mediaType: 'image',
-        mediaSrc: 'assets/hero_chocolate_cake.jpg',
+        mediaType: 'video',
+        mediaSrc: 'assets/Hands_spreading_frosting_on_cake_202607250854.mp4',
         icon: '🌟',
         isFinal: true
       }
