@@ -696,6 +696,175 @@ function toggleCheck(ingId) {
   openIngredients(state.currentRecipe);
 }
 
+// COOKING STEP VIEW & VOICE/TIMER INTEGRATION
+function openRecipeStep(recipeId = 'pizza', stepIdx = 0) {
+  voiceover.stop();
+  sounds.playClick();
+  state.currentRecipe = recipeId;
+  state.currentStepIndex = stepIdx;
+  state.currentView = 'cooking';
+
+  const recipe = recipeData[recipeId];
+  const step = recipe.steps[stepIdx];
+
+  // Set default timer duration depending on step, restoring from localStorage if active
+  if (step.hasTimer) {
+    const savedTimerEnd = localStorage.getItem(`noras_timer_${recipeId}_${stepIdx}`);
+    if (savedTimerEnd) {
+      const remainingSecs = Math.max(0, Math.floor((parseInt(savedTimerEnd) - Date.now()) / 1000));
+      state.timerSeconds = remainingSecs;
+      if (remainingSecs > 0) {
+        startTimer(false); // Resume running timer
+      } else {
+        localStorage.removeItem(`noras_timer_${recipeId}_${stepIdx}`);
+        state.timerSeconds = (step.timerMinutes || 10) * 60;
+      }
+    } else {
+      state.timerSeconds = (step.timerMinutes || 10) * 60;
+    }
+  }
+
+  const main = document.getElementById('mainView');
+  main.innerHTML = `
+    <div class="checklist-container">
+      
+      <!-- STEP PROGRESS INDICATOR -->
+      <div class="step-header">
+        <div style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--primary-pink)">
+          ${recipe.title} - Trin ${step.num} af ${recipe.steps.length}
+        </div>
+        <div class="step-indicator">
+          ${recipe.steps.map((s, idx) => `
+            <div class="step-dot ${idx === stepIdx ? 'active' : (idx < stepIdx ? 'done' : '')}"></div>
+          `).join('')}
+        </div>
+      </div>
+
+      <h2 class="step-title">${step.title}</h2>
+
+      <!-- VOICE READ ALOUD BUTTON -->
+      <div style="margin: 12px 0 18px 0; text-align: center;">
+        <button id="speechBtn" class="speech-btn" onclick="voiceover.toggleSpeak('${step.text.replace(/'/g, "\\'")}')">
+          🔊 Læs Højt for Mig!
+        </button>
+      </div>
+
+      <!-- STEP MEDIA CONTENT (3D Claymation / Google Flow Video) -->
+      <div class="step-media-container">
+        ${step.mediaType === 'video' ? `
+          <video src="${step.mediaSrc}" class="step-video" autoplay loop muted playsinline decoding="async"></video>
+        ` : `
+          <img src="${step.mediaSrc}" alt="${step.title}" class="step-img" decoding="async" loading="eager">
+        `}
+      </div>
+
+      <p class="step-text" style="font-size: 1.25rem; line-height: 1.6; margin: 16px 0;">${step.text}</p>
+
+      ${step.mathHint ? `
+        <div class="math-hint-box">
+          ${step.mathHint}
+        </div>
+      ` : ''}
+
+      <!-- IN-APP TIMER -->
+      ${step.hasTimer ? `
+        <div class="timer-container">
+          <div style="font-family: var(--font-heading); color: #718096;">Nedtællings-Timer ⏱️</div>
+          <div id="timerDisplay" class="timer-display">${formatSeconds(state.timerSeconds)}</div>
+          <div class="timer-controls">
+            <button class="timer-btn start" onclick="startTimer()">Start ⏱️</button>
+            <button class="timer-btn pause" onclick="pauseTimer()">Pause ⏸️</button>
+            <button class="timer-btn reset" onclick="resetTimer(${step.timerMinutes || 10})">Nulstil 🔄</button>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- BOTTOM NAVIGATION BUTTONS FOR STEP -->
+      <div class="step-nav-bar">
+        ${stepIdx > 0 ? `
+          <button class="big-btn prev" onclick="openRecipeStep('${recipeId}', ${stepIdx - 1})">⬅️ Forrige</button>
+        ` : `
+          <button class="big-btn prev" onclick="openIngredients('${recipeId}')">⬅️ Tjekliste</button>
+        `}
+
+        ${step.isFinal ? `
+          <button class="big-btn finish" onclick="finishRecipe('${recipeId}')">Færdig! Få 3 Stjerner ⭐⭐⭐</button>
+        ` : `
+          <button class="big-btn next" onclick="openRecipeStep('${recipeId}', ${stepIdx + 1})">Næste Trin ➡️</button>
+        `}
+      </div>
+
+    </div>
+  `;
+
+  const activeVideo = main.querySelector('video');
+  if (activeVideo) {
+    activeVideo.play().catch(() => {});
+  }
+}
+
+// Backward compatibility helper
+function openPizzaRecipe(stepIdx = 0) {
+  openRecipeStep('pizza', stepIdx);
+}
+
+// TIMER LOGIC WITH LOCALSTORAGE PERSISTENCE
+function formatSeconds(totalSecs) {
+  const mins = Math.floor(totalSecs / 60);
+  const secs = totalSecs % 60;
+  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+function startTimer(setNewEndTime = true) {
+  if (state.timerRunning) return;
+  sounds.playClick();
+  state.timerRunning = true;
+
+  if (setNewEndTime) {
+    const timerEndTime = Date.now() + (state.timerSeconds * 1000);
+    localStorage.setItem(`noras_timer_${state.currentRecipe}_${state.currentStepIndex}`, timerEndTime);
+  }
+
+  state.timerInterval = setInterval(() => {
+    const savedTimerEnd = localStorage.getItem(`noras_timer_${state.currentRecipe}_${state.currentStepIndex}`);
+    if (savedTimerEnd) {
+      state.timerSeconds = Math.max(0, Math.floor((parseInt(savedTimerEnd) - Date.now()) / 1000));
+    } else {
+      state.timerSeconds--;
+    }
+
+    updateTimerDisplay();
+
+    if (state.timerSeconds <= 0) {
+      clearInterval(state.timerInterval);
+      state.timerRunning = false;
+      localStorage.removeItem(`noras_timer_${state.currentRecipe}_${state.currentStepIndex}`);
+      sounds.playFanfare();
+      alert('🔔 TIDEN ER GÅET! Din mad/dej er klar! 🎉');
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  sounds.playClick();
+  clearInterval(state.timerInterval);
+  state.timerRunning = false;
+  localStorage.removeItem(`noras_timer_${state.currentRecipe}_${state.currentStepIndex}`);
+}
+
+function resetTimer(mins) {
+  pauseTimer();
+  state.timerSeconds = mins * 60;
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const display = document.getElementById('timerDisplay');
+  if (display) {
+    display.innerText = formatSeconds(state.timerSeconds);
+  }
+}
+
 // RECIPE QUIZZES DATA
 const recipeQuizzes = {
   pizza: {
