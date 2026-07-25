@@ -351,6 +351,37 @@ class SoundFX {
     osc.stop(this.ctx.currentTime + 0.08);
   }
 
+  playPop() {
+    this.init();
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1200, this.ctx.currentTime + 0.05);
+    gain.gain.setValueAtTime(0.4, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.05);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start();
+    osc.stop(this.ctx.currentTime + 0.05);
+  }
+
+  playChime() {
+    this.init();
+    [880, 1108.73, 1318.51, 1760].forEach((freq, i) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, this.ctx.currentTime + i * 0.08);
+      gain.gain.setValueAtTime(0.25, this.ctx.currentTime + i * 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + i * 0.08 + 0.25);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(this.ctx.currentTime + i * 0.08);
+      osc.stop(this.ctx.currentTime + i * 0.08 + 0.25);
+    });
+  }
+
   playSuccess() {
     this.init();
     const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
@@ -636,158 +667,44 @@ function openIngredients(recipeId) {
 }
 
 function toggleCheck(ingId) {
-  sounds.playClick();
   state.checklist[ingId] = !state.checklist[ingId];
+  if (state.checklist[ingId]) {
+    sounds.playPop();
+  } else {
+    sounds.playClick();
+  }
   openIngredients(state.currentRecipe);
 }
 
-// COOKING STEP VIEW
-function openRecipeStep(recipeId = 'pizza', stepIdx = 0) {
-  voiceover.stop();
-  sounds.playClick();
-  state.currentRecipe = recipeId;
-  state.currentStepIndex = stepIdx;
-  state.currentView = 'cooking';
-
-  const recipe = recipeData[recipeId];
-  const step = recipe.steps[stepIdx];
-
-  if (step.hasTimer) {
-    state.timerSeconds = (step.timerMinutes || 10) * 60;
+// RECIPE QUIZZES DATA
+const recipeQuizzes = {
+  pizza: {
+    question: 'Hvor lang tid skulle pizzadejen hæve i skålen? ⏱️',
+    options: [
+      { text: 'A) 5 minutter', correct: false },
+      { text: 'B) 30 minutter', correct: true },
+      { text: 'C) 2 timer', correct: false }
+    ]
+  },
+  pancakes: {
+    question: 'Hvorfor skulle pandekagedejen hvile i 10 minutter? 🥞',
+    options: [
+      { text: 'A) Så melet opsuger mælken og bliver blødt', correct: true },
+      { text: 'B) Så dejen fryser til is', correct: false },
+      { text: 'C) Så dejen bliver grøn', correct: false }
+    ]
+  },
+  chocolate_cake: {
+    question: 'Hvilken temperatur skal ovnen tændes på til chokoladekagen? 🍫🔥',
+    options: [
+      { text: 'A) 100°C', correct: false },
+      { text: 'B) 180°C varmluft', correct: true },
+      { text: 'C) 500°C', correct: false }
+    ]
   }
+};
 
-  const fullTextToRead = `${step.title}. ${step.text} ${step.mathHint ? step.mathHint.replace(/[\u{1F300}-\u{1F9FF}]/gu, '') : ''}`;
-
-  const main = document.getElementById('mainView');
-  main.innerHTML = `
-    <!-- STEP PROGRESS INDICATOR -->
-    <div class="step-header">
-      <div style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--primary-pink)">
-        ${recipe.title} - Trin ${step.num} af ${recipe.steps.length}
-      </div>
-      <div class="step-indicator">
-        ${recipe.steps.map((s, idx) => `
-          <div class="dot ${idx === stepIdx ? 'active' : (idx < stepIdx ? 'completed' : '')}"></div>
-        `).join('')}
-      </div>
-    </div>
-
-    <!-- MAIN STEP CARD -->
-    <div class="recipe-step-card">
-      <div class="step-content-grid">
-        
-        <!-- LEFT: OPTIMIZED INSTANT VIDEO / IMAGE DISPLAY -->
-        <div class="media-wrapper">
-          ${step.mediaType === 'video' ? `
-            <video src="${step.mediaSrc}" preload="auto" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; border-radius:16px;"></video>
-          ` : `
-            <img src="${step.mediaSrc}" alt="${step.title}" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
-          `}
-        </div>
-
-        <!-- RIGHT: INSTRUCTIONS & MATH HINTS -->
-        <div class="step-instructions">
-          <div>
-            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
-              <div class="step-num-badge">Trin ${step.num}</div>
-              <button id="speechBtn" class="speech-btn" onclick="voiceover.toggleSpeak(\`${fullTextToRead.replace(/`/g, '\\`')}\`)">
-                🔊 Læs Højt for Mig!
-              </button>
-            </div>
-            
-            <h2 class="step-title">${step.title}</h2>
-            <p class="step-text">${step.text}</p>
-
-            ${step.mathHint ? `
-              <div class="kid-math-box">
-                <span class="math-icon">🔢</span>
-                <span>${step.mathHint}</span>
-              </div>
-            ` : ''}
-          </div>
-
-          <!-- IN-APP TIMER -->
-          ${step.hasTimer ? `
-            <div class="timer-container">
-              <div style="font-family: var(--font-heading); color: #718096;">Nedtællings-Timer ⏱️</div>
-              <div class="timer-display" id="timerDisplay">${formatSeconds(state.timerSeconds)}</div>
-              <div class="timer-controls">
-                <button class="timer-btn start" onclick="startTimer()">Start Timer 🚀</button>
-                <button class="timer-btn stop" onclick="stopTimer()">Stop 🛑</button>
-              </div>
-            </div>
-          ` : ''}
-        </div>
-
-      </div>
-
-      <!-- BOTTOM NAVIGATION BUTTONS FOR STEP -->
-      <div class="step-nav-bar">
-        ${stepIdx > 0 ? `
-          <button class="big-btn prev" onclick="openRecipeStep('${recipeId}', ${stepIdx - 1})">⬅️ Forrige</button>
-        ` : `
-          <button class="big-btn prev" onclick="openIngredients('${recipeId}')">⬅️ Tjekliste</button>
-        `}
-
-        ${step.isFinal ? `
-          <button class="big-btn finish" onclick="finishRecipe('${recipeId}')">Færdig! Få 3 Stjerner ⭐⭐⭐</button>
-        ` : `
-          <button class="big-btn next" onclick="openRecipeStep('${recipeId}', ${stepIdx + 1})">Næste Trin ➡️</button>
-        `}
-      </div>
-
-    </div>
-  `;
-
-  const activeVideo = main.querySelector('video');
-  if (activeVideo) {
-    activeVideo.play().catch(() => {});
-  }
-}
-
-// Backward compatibility helper
-function openPizzaRecipe(stepIdx = 0) {
-  openRecipeStep('pizza', stepIdx);
-}
-
-// TIMER LOGIC
-function formatSeconds(totalSecs) {
-  const mins = Math.floor(totalSecs / 60);
-  const secs = totalSecs % 60;
-  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-}
-
-function startTimer() {
-  sounds.playClick();
-  if (state.timerRunning) return;
-  state.timerRunning = true;
-
-  state.timerInterval = setInterval(() => {
-    state.timerSeconds--;
-    updateTimerDisplay();
-
-    if (state.timerSeconds <= 0) {
-      clearInterval(state.timerInterval);
-      state.timerRunning = false;
-      sounds.playFanfare();
-      alert('⏰ DING DING DING! Tiden er gået! Klar til næste skridt!');
-    }
-  }, 1000);
-}
-
-function stopTimer() {
-  sounds.playClick();
-  clearInterval(state.timerInterval);
-  state.timerRunning = false;
-}
-
-function updateTimerDisplay() {
-  const display = document.getElementById('timerDisplay');
-  if (!display) return;
-  display.innerText = formatSeconds(state.timerSeconds);
-}
-
-// FINISH RECIPE CELEBRATION
+// FINISH RECIPE CELEBRATION WITH QUIZ
 function finishRecipe(recipeId = 'pizza') {
   voiceover.stop();
   sounds.playFanfare();
@@ -802,6 +719,8 @@ function finishRecipe(recipeId = 'pizza') {
   }
 
   const recipe = recipeData[recipeId];
+  const quiz = recipeQuizzes[recipeId];
+
   let trophyImg = 'assets/pizza_trophy.jpg';
   let title = 'PIZZA-MESTER!';
 
@@ -815,16 +734,29 @@ function finishRecipe(recipeId = 'pizza') {
 
   const main = document.getElementById('mainView');
   main.innerHTML = `
-    <div style="text-align: center; padding: 40px 20px; background: white; border-radius: 24px; border: 4px solid var(--primary-yellow);">
-      <img src="${trophyImg}" alt="Trofæ" style="width:160px; height:160px; object-fit:cover; border-radius:24px; box-shadow:0 8px 24px rgba(0,0,0,0.15); animation: floatPizza 2s infinite ease-in-out;">
-      <h1 style="font-family: var(--font-heading); font-size: 2.5rem; color: var(--primary-pink); margin: 16px 0;">
+    <div style="text-align: center; padding: 32px 20px; background: white; border-radius: 24px; border: 4px solid var(--primary-yellow);">
+      <img src="${trophyImg}" alt="Trofæ" style="width:140px; height:140px; object-fit:cover; border-radius:24px; box-shadow:0 8px 24px rgba(0,0,0,0.15); animation: floatPizza 2s infinite ease-in-out;">
+      <h1 style="font-family: var(--font-heading); font-size: 2.3rem; color: var(--primary-pink); margin: 12px 0;">
         SEJT GÅET, NORA! 🎉
       </h1>
-      <p style="font-size: 1.4rem; font-weight: bold; color: var(--text-dark); margin-bottom: 24px;">
+      <p style="font-size: 1.3rem; font-weight: bold; color: var(--text-dark); margin-bottom: 20px;">
         Du er nu en ægte ${title} Du har optjent 3 nye stjerner! ⭐⭐⭐
       </p>
 
-      <div style="display: flex; gap: 16px; justify-content: center;">
+      <!-- INTERACTIVE QUIZ FOR EXTRA BONUS STAR -->
+      <div id="quizBox" class="quiz-card">
+        <div class="quiz-title">⭐ Ekstra Bonus-Stjerne Spørgsmål ⭐</div>
+        <div class="quiz-question">${quiz.question}</div>
+        <div class="quiz-options">
+          ${quiz.options.map((opt, idx) => `
+            <button class="quiz-opt-btn" onclick="answerQuiz(${idx}, ${opt.correct})">
+              ${opt.text}
+            </button>
+          `).join('')}
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 16px; justify-content: center; margin-top: 24px;">
         <button class="big-btn next" onclick="goHome()">Gå til Forsiden 🏠</button>
         <button class="big-btn finish" onclick="openBadges()">Se Mine Trofæer 🏆</button>
       </div>
@@ -832,7 +764,71 @@ function finishRecipe(recipeId = 'pizza') {
   `;
 }
 
-// BADGES VIEW
+function answerQuiz(optIdx, isCorrect) {
+  const btns = document.querySelectorAll('.quiz-opt-btn');
+  if (isCorrect) {
+    sounds.playChime();
+    addStars(1);
+    btns[optIdx].classList.add('correct-opt');
+    btns[optIdx].innerHTML += ' 🎉 RIGTIGT! (+1 BONUS ⭐)';
+    if (window.confetti) {
+      confetti({ particleCount: 80, spread: 60, origin: { y: 0.7 } });
+    }
+  } else {
+    sounds.playClick();
+    btns[optIdx].classList.add('wrong-opt');
+    btns[optIdx].innerHTML += ' ❌ Prøv igen!';
+  }
+}
+
+// PRINTABLE DIPLOMA GENERATOR
+function printDiploma() {
+  sounds.playFanfare();
+  const dateStr = new Date().toLocaleDateString('da-DK', { year: 'numeric', month: 'long', day: 'numeric' });
+  const printArea = document.getElementById('diplomaPrintArea');
+  
+  printArea.innerHTML = `
+    <div class="diploma-border">
+      <div>
+        <div style="font-size: 3rem;">🏆 ⭐ 🍕 🥞 🍫 ⭐ 🏆</div>
+        <h1 class="diploma-header-title">NORAS KOKKESKOLE</h1>
+        <div class="diploma-sub-title">OFFICIELT STJERNEKOK-DIPLOM</div>
+      </div>
+
+      <div>
+        <p style="font-size: 1.4rem; color: #4A5568; margin-top: 10px;">Dette æres-diplom tildeles hermed:</p>
+        <div class="diploma-name">NORA</div>
+        <p class="diploma-body-text">
+          for at have gennemført kokkeskolens opskrifter fra bunden, æltet dej, bagt i ovnen og optjent <strong style="color:#D69E2E;">${state.stars} Guld-Stjerner!</strong>
+        </p>
+      </div>
+
+      <div class="diploma-badges-row">
+        <div class="diploma-badge-item">
+          <img src="assets/pizza_trophy.jpg" class="diploma-badge-img"><br>
+          Pizza-Mester 🍕
+        </div>
+        <div class="diploma-badge-item">
+          <img src="assets/pancake_trophy.jpg" class="diploma-badge-img"><br>
+          Pandekage-Konge 🥞
+        </div>
+        <div class="diploma-badge-item">
+          <img src="assets/hero_chocolate_cake.jpg" class="diploma-badge-img"><br>
+          Kage-Mester 🍫
+        </div>
+      </div>
+
+      <div class="diploma-footer-signatures">
+        <div>📅 Dato: ${dateStr}</div>
+        <div>✍️ Chef Nora & Voksne Hjælper</div>
+      </div>
+    </div>
+  `;
+  
+  window.print();
+}
+
+// BADGES & DIPLOMA VIEW
 function openBadges() {
   voiceover.stop();
   sounds.playClick();
@@ -843,8 +839,15 @@ function openBadges() {
   const main = document.getElementById('mainView');
   main.innerHTML = `
     <div class="checklist-container">
-      <h2 class="step-title">Noras Trofæer & Diplomer 🏆</h2>
-      <p class="step-text">Her er alle de seje kokke-mærker du har låst op for!</p>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:16px;">
+        <div>
+          <h2 class="step-title" style="margin-bottom:4px;">Noras Trofæer & Diplomer 🏆</h2>
+          <p class="step-text" style="margin-bottom:0;">Her er alle de seje kokke-mærker du har låst op for!</p>
+        </div>
+        <button class="big-btn finish" onclick="printDiploma()" style="flex:none; padding:12px 24px; font-size:1.2rem; background: linear-gradient(135deg, #FFD166 0%, #F77F00 100%); color:white; box-shadow:0 4px 0px #C66900;">
+          🖨️ Print Mit Kokkediplom! 📜
+        </button>
+      </div>
 
       <div class="badges-grid">
         <div class="badge-card">
