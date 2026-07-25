@@ -298,6 +298,86 @@ class SoundFX {
 
 const sounds = new SoundFX();
 
+// HIGH-QUALITY DANISH WEBSPEECH VOICEOVER MANAGER (100% FREE & NATIVE)
+class VoiceoverManager {
+  constructor() {
+    this.synth = window.speechSynthesis;
+    this.danishVoice = null;
+    this.initVoices();
+  }
+
+  initVoices() {
+    if (!this.synth) return;
+    const findVoice = () => {
+      const voices = this.synth.getVoices();
+      // Prioritize natural Danish voices on iOS/macOS/Android/Chrome (e.g. Sara, Magnus, Google dansk, da-DK)
+      this.danishVoice = voices.find(v => v.lang.includes('da-DK') || v.lang.includes('da_DK') || v.lang.startsWith('da')) || null;
+    };
+
+    findVoice();
+    if (this.synth.onvoiceschanged !== undefined) {
+      this.synth.onvoiceschanged = findVoice;
+    }
+  }
+
+  stop() {
+    if (this.synth && this.synth.speaking) {
+      this.synth.cancel();
+    }
+    const btn = document.getElementById('speechBtn');
+    if (btn) {
+      btn.classList.remove('speaking');
+      btn.innerHTML = '🔊 Læs Højt for Mig!';
+    }
+  }
+
+  toggleSpeak(text) {
+    if (!this.synth) {
+      alert('⚠️ Din browser understøtter ikke indbygget oplæsning.');
+      return;
+    }
+
+    if (this.synth.speaking) {
+      this.stop();
+      return;
+    }
+
+    this.stop();
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    if (this.danishVoice) {
+      utterance.voice = this.danishVoice;
+    }
+    utterance.lang = 'da-DK';
+    utterance.rate = 0.92; // Slightly slower, warm pace for 7-year-old Nora
+    utterance.pitch = 1.08; // Friendly, cheerful pitch
+
+    const btn = document.getElementById('speechBtn');
+    
+    utterance.onstart = () => {
+      if (btn) {
+        btn.classList.add('speaking');
+        btn.innerHTML = '🛑 Stop Oplæsning';
+      }
+    };
+
+    utterance.onend = () => {
+      if (btn) {
+        btn.classList.remove('speaking');
+        btn.innerHTML = '🔊 Læs Højt for Mig!';
+      }
+    };
+
+    utterance.onerror = () => {
+      this.stop();
+    };
+
+    this.synth.speak(utterance);
+  }
+}
+
+const voiceover = new VoiceoverManager();
+
 // VIDEO PRELOADER FOR INSTANT PLAYBACK PERFORMANCE
 function preloadRecipeVideos() {
   const steps = [...recipeData.pizza.steps, ...recipeData.pancakes.steps];
@@ -332,6 +412,7 @@ function addStars(num) {
 
 // ROUTING & VIEW RENDERERS
 function goHome() {
+  voiceover.stop();
   sounds.playClick();
   state.currentView = 'home';
   renderHome();
@@ -419,6 +500,7 @@ function soundLocked(msg = '🔒 Lav Pizzaen først for at opnå stjerner og lå
 
 // INGREDIENTS CHECKLIST VIEW
 function openIngredients(recipeId) {
+  voiceover.stop();
   sounds.playClick();
   state.currentRecipe = recipeId;
   state.currentView = 'ingredients';
@@ -457,6 +539,7 @@ function toggleCheck(ingId) {
 
 // COOKING STEP VIEW
 function openRecipeStep(recipeId = 'pizza', stepIdx = 0) {
+  voiceover.stop();
   sounds.playClick();
   state.currentRecipe = recipeId;
   state.currentStepIndex = stepIdx;
@@ -468,6 +551,9 @@ function openRecipeStep(recipeId = 'pizza', stepIdx = 0) {
   if (step.hasTimer) {
     state.timerSeconds = (step.timerMinutes || 10) * 60;
   }
+
+  // Construct full text to read out loud
+  const fullTextToRead = `${step.title}. ${step.text} ${step.mathHint ? step.mathHint.replace(/[\u{1F300}-\u{1F9FF}]/gu, '') : ''}`;
 
   const main = document.getElementById('mainView');
   main.innerHTML = `
@@ -499,7 +585,13 @@ function openRecipeStep(recipeId = 'pizza', stepIdx = 0) {
         <!-- RIGHT: INSTRUCTIONS & MATH HINTS -->
         <div class="step-instructions">
           <div>
-            <div class="step-num-badge">Trin ${step.num}</div>
+            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div class="step-num-badge">Trin ${step.num}</div>
+              <button id="speechBtn" class="speech-btn" onclick="voiceover.toggleSpeak(\`${fullTextToRead.replace(/`/g, '\\`')}\`)">
+                🔊 Læs Højt for Mig!
+              </button>
+            </div>
+            
             <h2 class="step-title">${step.title}</h2>
             <p class="step-text">${step.text}</p>
 
@@ -594,6 +686,7 @@ function updateTimerDisplay() {
 
 // FINISH RECIPE CELEBRATION
 function finishRecipe(recipeId = 'pizza') {
+  voiceover.stop();
   sounds.playFanfare();
   addStars(3);
 
@@ -630,6 +723,7 @@ function finishRecipe(recipeId = 'pizza') {
 
 // BADGES VIEW
 function openBadges() {
+  voiceover.stop();
   sounds.playClick();
   state.currentView = 'badges';
   const isPancakesCompleted = state.stars >= 6;

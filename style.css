@@ -457,6 +457,40 @@ body {
   align-self: flex-start;
 }
 
+.speech-btn {
+  background: linear-gradient(135deg, #8338EC 0%, #3A86EF 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0px #5E17EB;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 10px;
+  margin-bottom: 12px;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.speech-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0px #5E17EB;
+}
+
+.speech-btn.speaking {
+  background: var(--primary-pink);
+  box-shadow: 0 4px 0px #C53030;
+  animation: pulseSpeech 1.5s infinite;
+}
+
+@keyframes pulseSpeech {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
 .step-title {
   font-family: var(--font-heading);
   font-size: 1.8rem;
