@@ -22,7 +22,29 @@
 
 ---
 
-## 🛠️ 2. Arkitektonisk Defensivitet som Standard
+## 🔬 2. Analyse af Praktiske Projekt-Forløb (Case Studies)
+
+### 📊 Case Study A: El-Beregner & Elafgiftsrefusion (`calculator.ts`)
+Dokumentet viser en moden udviklingslivscyklus drevet af kontinuerlig tilpasning til eksterne faktorer:
+
+* **Fra statisk til dynamisk arkitektur (Fase 1, 4 & 6)**: Projektet startede med simple antagelser, men blev tvunget til at håndtere virkelighedens kompleksitet (udfasede API'er, 4 komplekse abonnementsmodeller, og dynamiske prisstigninger 2026/2027). Isoleringen af beregningslogikken i `calculator.ts` beskyttet af en 11-punkts testsuite (Fase 8) viser stærk *Separation of Concerns*.
+* **API-Udfasning & Fallback**: Udfasningen af *Elspotprices API* beviste, at eksterne afhængigheder svigter. Løsningen var at implementere caching (`stale-while-revalidate`) og en hardcodet *"sane default"* (som 0,85 DKK/kWh elafgiftsrefusion).
+* **Hyper-lokalisering som USP (Fase 5)**: Beregneren differentierede sig fra standardværktøjer ved at integrere geolokationsdata (*Frydenhøjparken*). Økonomi underordnedes praktisk infrastruktur.
+* **Transparens i Antagelser (Fase 3)**: UI-badget til *BMW iX1* gjorde alle bil- og batteriantagelser synlige direkte i brugergrænsefladen for at minimere fejlkilder.
+* **UX-pragmatisme & Glanceability (Fase 7)**: Erkendelsen af, at hover-effekter (tooltips) svigter på mobile enheder og i hurtig aflæsning (f.eks. Recharts-grafer), førte til hardcodede direkte labels for at reducere den kognitive belastning.
+
+---
+
+### 🍕 Case Study B: Noras Kokkeskole (`noras-kokkeskole`)
+* **7-Årig Børne-Ergometri**: Læsetræthed løst via 100% gratis nativ HTML5 `window.speechSynthesis` (Web Speech API) med tilpasset hastighed (`rate = 0.92`) og tonehøjde (`pitch = 1.08`). Emojis renses via regex (`replace(/[\u{1F300}-\u{1F9FF}]/gu, '')`) for at forhindre maskinelle fejluudtalelser.
+* **Google Flow 3D MP4 Videoer**: 5-sekunders animationer integreret på alle opskrifter med iOS WebKit autoplay-attributter (`autoplay loop muted playsinline`) og asynkron `requestIdleCallback` preloading for 0 CLS.
+* **Gamification & Fysisk Belønning**: Stjernelåsning (0, 3, 6, 9 ⭐) kombineret med bonus-quizzer og et printbart A4-diplom (`@media print`) til køleskabet.
+* **Zero-Dependency Sound Synthesizer**: Web Audio API oscillatorkredsløb (`SoundFX`) giver taktil lyd-feedback med 0 KB netværksbelastning.
+* **Retina Font & Touch Optimering**: `-webkit-font-smoothing: antialiased` og `touch-action: manipulation` fjerner 300ms tap-delay på iPad.
+
+---
+
+## 🛠️ 3. Arkitektonisk Defensivitet som Standard
 
 ### 💡 Læringer & Fremtidige Agent-Regler:
 * **Netværk og Miljø**:
@@ -34,7 +56,7 @@
 
 ---
 
-## 🎓 3. Domæneekspertise over Syntaks & Data Ownership
+## 🎓 4. Domæneekspertise over Syntaks & Data Ownership
 
 ### 💡 Læringer & Fremtidige Agent-Regler:
 * **Forretningslogik vs. Rå Kode**:
@@ -47,20 +69,19 @@
 
 ---
 
-## 🧠 4. Kognitiv UX, "Af-AI'sering" & Menneskelig Ergometri
+## 🧠 5. Kognitiv UX, "Af-AI'sering" & Menneskelig Ergometri
 
 ### 💡 Læringer & Fremtidige Agent-Regler:
 * **Data-Visualisering for Mennesker ("Glanceability")**:
   * Hover-effekter (tooltips) svigter på mobile enheder og iPad-touchskærme. Agenten skal designe grafer og UI ud fra "Glanceability" – dvs. altid bruge direkte labels ved kritiske data frem for hover-states.
 * **Børne- og Bruger-Ergometri**:
   * Børn (og travle brugere) oplever læsetræthed. Native stemmesyntese (HTML5 `window.speechSynthesis`), 90px+ ingrediensbilleder og store touch-flader (min 64px) gør systemet uafhængigt af kognitiv overbelastning.
-  * **Emoji Sanitization**: Emojis skal renses fra TTS-tekst med regex (`replace(/[\u{1F300}-\u{1F9FF}]/gu, '')`) for at forhindre maskinelle fejluudtalelser.
 * **Sproglig Disciplin & Ortografi**:
   * Agenten skal køre intern validering for dansk ortografi (undgå særskrivning / compound word errors og maskinoversatte vendinger). Sproget skal skifte fra beskrivende (3. person) til handlende (2. person, direkte tiltale).
 
 ---
 
-## 📡 7. Observability First
+## 📡 6. Observability First
 
 > *"Et system, der ikke kan observeres, kan ikke vedligeholdes."*
 
@@ -72,7 +93,7 @@ En agent bør ikke blot skrive kode, men samtidig bygge den nødvendige instrume
 
 ---
 
-## 🔄 8. Idempotens som Standard
+## 🔄 7. Idempotens som Standard
 
 > *"Alle handlinger skal kunne udføres to gange uden katastrofe."*
 
@@ -81,7 +102,7 @@ Virkeligheden består af dobbeltklik, browser refresh, tab crashes, retry-mekani
 
 ---
 
-## 🧬 10. Evolvability over Perfection
+## 🧬 8. Evolvability over Perfection
 
 > *"Den bedste kode er den kode, der er billigst at ændre."*
 
@@ -90,14 +111,14 @@ Optimér ikke for nutidig teoretisk perfektion, men for omkostningsfri tilpasnin
 
 ---
 
-## ⚖️ 11. Explicit Trade-offs
+## ⚖️ 9. Explicit Trade-offs
 
 AI-agenter må aldrig skjule kompromiser.
 * **Eksplicit Vurdering**: Dokumentér eksplicit hvornår en løsning vælges (f.eks. *"✓ 25% langsommere, til gengæld ✓ 80% simplere, lettere at teste og billigere at vedligeholde"*).
 
 ---
 
-## 🛡️ 12. Security by Default
+## 🛡️ 10. Security by Default
 
 Sikkerhed er et fundament, ikke en eftertanke. Agenten skal automatisk implementere:
 * Input-validering & HTML/SQL escaping
@@ -107,7 +128,7 @@ Sikkerhed er et fundament, ikke en eftertanke. Agenten skal automatisk implement
 
 ---
 
-## ⚡ 13. Performance Budget
+## ⚡ 11. Performance Budget
 
 Performance er et eksplicit krav, som agenten skal overholde:
 * **First Contentful Paint (FCP)** < 1.5 s
@@ -119,7 +140,7 @@ Performance er et eksplicit krav, som agenten skal overholde:
 
 ---
 
-## 🧘 14. Simplicity Wins
+## 🧘 12. Simplicity Wins
 
 > *"Den mest komplekse kode er sjældent den mest intelligente."*
 
@@ -130,28 +151,28 @@ Kompleksitet er en direkte vedligeholdelsesomkostning. Foretræk:
 
 ---
 
-## 👤 15. Human Override & Menneskelig Kontrol
+## 👤 13. Human Override & Menneskelig Kontrol
 
 AI må aldrig gøre sig selv ufejlbarlig.
 * **Kontrolmekanismer**: Byg altid manuelle overrides, konfigurationsmuligheder, mulighed for at deaktivere automatisering, og tydelige begrundelser for AI-beslutninger. Mennesket er systemets endelige beslutningstager.
 
 ---
 
-## 🧪 16. Test Behaviour, Not Implementation
+## 🧪 14. Test Behaviour, Not Implementation
 
 Undgå brittle tests der tester interne kald (`expect(functionA).toHaveBeenCalled()`).
 * **Adfærds-fokus**: Test altid ud fra brugerscenariet: *"Når brugeren gør X, skal resultatet være Y"*. Implementeringen må gerne ændres, så længe adfærden er stabil.
 
 ---
 
-## 🩹 17. Graceful Degradation
+## 🩹 15. Graceful Degradation
 
 Et system bør aldrig gå fra 100% til 0%.
 * **Fallback-funktionalitet**: Hvis en komponent fejler, vis cached data, reduceret funktionalitet og informér brugeren. *"Noget virker"* er uendeligt bedre end *"Intet virker"*.
 
 ---
 
-## 💰 18. Cost Awareness (Token & Cloud)
+## 💰 16. Cost Awareness (Token & Cloud)
 
 Cloud og AI er ikke gratis. Agenten skal løbende optimere:
 * Antal API-kald, CPU/hukommelsesforbrug, databaseforespørgsler, egress og storage.
@@ -159,7 +180,7 @@ Cloud og AI er ikke gratis. Agenten skal løbende optimere:
 
 ---
 
-## 📝 19. Architecture Decision Records (ADR)
+## 📝 17. Architecture Decision Records (ADR)
 
 Store arkitektoniske beslutninger skal dokumenteres i et kort format:
 * **Decision**: Valgte teknologi X over Y.
@@ -169,7 +190,7 @@ Store arkitektoniske beslutninger skal dokumenteres i et kort format:
 
 ---
 
-## 🤖 20. AI-Specific Engineering & Confidence Management
+## 🤖 18. AI-Specific Engineering & Confidence Management
 
 > **Kritiske AI-Regler**: AI må ALDRIG opfinde API'er, opfinde dokumentation, opfinde biblioteker, opfinde parametre eller opfinde versionsnumre.
 
@@ -182,3 +203,13 @@ Store arkitektoniske beslutninger skal dokumenteres i et kort format:
     - Browser support
   ```
 * Usikkerhed skal fremstå synligt og håndteres åbent, aldrig skjules bag usande påstande.
+
+---
+
+## 🚀 19. Operationaliserings-Tjekliste for Kodeagenten
+1. ✅ **Design altid defensivt**: Byg API-fallbacks og sane defaults som standard.
+2. ✅ **Adskil konfigurationsdata**: Træk priser, satser og opskrifter ud i konfigurationsobjekter.
+3. ✅ **Prioritér Glanceability**: Direkte synlige labels frem for hover-tooltips.
+4. ✅ **Sikre sproglig kvalitet**: Danske sammensatte ord skrives i ét ord; brug direkte tiltale (2. person).
+5. ✅ **Deklarér antagelser i UI**: Gør systemets forudsætninger synlige for brugeren (f.eks. BMW iX1 badge).
+6. ✅ **Tjek altid for port-kollisioner og miljøvariabler defensivt.**
